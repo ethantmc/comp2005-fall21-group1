@@ -35,4 +35,9 @@ public boolean isColorModeEnabled() {
 public void setColorModeEnabled(boolean colorModeEnabled) {
 	this.colorModeEnabled = colorModeEnabled;
 }
+public void draw(double x,double y) {
+	//TODO Method Stub. Here we have tokens responsible for *graphically* representing themselves.
+	//Their coordinates are fetched from the board list- wherever that is - and whatever holds the board list is responsible for telling them to redraw.
+	//NOTE: This is a double as our solution to knowing whats in a stack is by drawing the four other stack tokens "below" and in the corners of a tile.
+}
 }
