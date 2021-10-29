@@ -19,11 +19,11 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 
 public class SettingsUI extends JFrame implements MouseListener {
-	private JPanel topPanel,centerPanel,bottomPanel;
+	private JPanel topPanel,centerPanel,rightPanel, bottomPanel;
 	private GridSquare [][]gridsquares;
 	private final Container contentPane;
 	private JLabel topLabel;
-	private JButton cancel, apply;
+	private JButton cancel, apply, toggleFullscreen;
 	private Component rigidArea;
 	private Color []colors = {ColorUIResource.GREEN, Color.red, Color.blue, Color.YELLOW};
 
@@ -44,10 +44,11 @@ public class SettingsUI extends JFrame implements MouseListener {
 
 		createButtons();
 		createTop();
+		createRight();
 		createBottom();
 
 		this.setVisible(true);
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
@@ -65,10 +66,6 @@ public class SettingsUI extends JFrame implements MouseListener {
 		apply.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		bottomPanel.add(apply);
 
-
-
-
-
 	}
 
 	private void createButtons(){
@@ -84,6 +81,16 @@ public class SettingsUI extends JFrame implements MouseListener {
 			//TODO: missing a catch event for lbl.toggleColorBlindMode()
 		}
 		this.add(centerPanel, BorderLayout.CENTER);
+	}
+
+	public void createRight(){
+		rightPanel = new JPanel();
+		rightPanel.setLayout(new BorderLayout());
+
+		contentPane.add(rightPanel,BorderLayout.EAST);
+		toggleFullscreen = new JButton("Toggle Fullscreen");
+		toggleFullscreen.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rightPanel.add(toggleFullscreen,BorderLayout.SOUTH); //TODO: Make this 100x less ugly, it looks NASTY. Grid resizes and is thus not appropriate, unless it can be locked.
 	}
 
 	public void createTop(){
@@ -106,15 +113,28 @@ public class SettingsUI extends JFrame implements MouseListener {
 	}
 
 
-
 	@Override
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+	}
 	@Override
 	public void mouseEntered(MouseEvent e) {}
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	@Override
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+		// get the object that was selected in the gui
+		Object selected = e.getSource();
+		System.out.println("Got to the selection code");
+
+		if (selected.equals(toggleFullscreen) )
+		{	
+			//this code works, but getting here doesn't occur.
+			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			this.setVisible(true);
+			this.pack();
+
+		}
+	}
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 }
