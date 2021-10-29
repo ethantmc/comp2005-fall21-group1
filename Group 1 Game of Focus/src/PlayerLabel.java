@@ -5,7 +5,7 @@ import javax.swing.JTextField;
 
 public class PlayerLabel extends JPanel {
 
-    private JButton colorblind,cancel,apply;
+    private JButton colorblind;
     private Container contentPane;
     private int playerID;
     private JLabel changePlayerText,changeColorDeficiency;
@@ -25,5 +25,6 @@ public class PlayerLabel extends JPanel {
         changeColorDeficiency = new JLabel("Colour Deficiency Mode: ");
         this.add(changeColorDeficiency);
         colorblind = new JButton("Disbaled");
+        this.add(colorblind);
     }
 }
