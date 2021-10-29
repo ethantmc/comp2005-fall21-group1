@@ -29,7 +29,7 @@ public class SettingsUI extends JFrame implements MouseListener {
 
         createButtons();
         createTop();
-        createBottom();
+        createBottom()
 
         this.setVisible(true);
         this.setResizable(false);
@@ -64,6 +64,7 @@ public class SettingsUI extends JFrame implements MouseListener {
             lbl.setBorder(BorderFactory.createLineBorder(Color.WHITE,4));
             lbl.addChangePlayerText("Player " + String.valueOf(i + 1));
             centerPanel.add(lbl);
+            //TODO: missing a catch event for lbl.toggleColorBlindMode()
         }
         this.add(centerPanel, BorderLayout.CENTER);
     }

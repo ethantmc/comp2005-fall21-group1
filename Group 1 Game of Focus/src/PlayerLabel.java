@@ -24,7 +24,12 @@ public class PlayerLabel extends JPanel {
         this.add(field);
         changeColorDeficiency = new JLabel("Colour Deficiency Mode: ");
         this.add(changeColorDeficiency);
-        colorblind = new JButton("Disbaled");
+        colorblind = new JButton("Disabled");
         this.add(colorblind);
+    }
+    public void toggleColorBlindMode() {
+		//TODO: actually toggle Colorblind mode on/off, this just changes the text right now.
+		colorblind.setText("Enabled")
+		
     }
 }
