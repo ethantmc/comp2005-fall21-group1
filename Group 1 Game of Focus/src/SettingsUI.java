@@ -1,140 +1,240 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.BorderFactory;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.plaf.ColorUIResource;
+import javax.swing.JOptionPane;
 
-public class SettingsUI extends JFrame implements MouseListener {
-	private JPanel topPanel,centerPanel,rightPanel, bottomPanel;
-	private GridSquare [][]gridsquares;
-	private final Container contentPane;
-	private JLabel topLabel;
-	private JButton cancel, apply, toggleFullscreen;
-	private Component rigidArea;
-	private Color []colors = {ColorUIResource.GREEN, Color.red, Color.blue, Color.YELLOW};
+public class SettingsUI {
+	private JPanel headingPanel, allplayerSettingsPanel, fullscreenPanel, cancelApplyPanel;
+	private JFrame frame = new JFrame();
+	private JLabel heading;
+	private JButton cancel, apply;
+	private JToggleButton toggleFullscreen;
+	private ArrayList<Player> playersBuffer = new ArrayList<Player>();
+	private ArrayList<JToggleButton> toggleColorblind = new ArrayList<JToggleButton>();
+	private ArrayList<JPanel> playerSettingsPanel = new ArrayList<JPanel>();
+	private ArrayList<JTextField> playerNameField = new ArrayList<JTextField>();
+	private Settings settings = new Settings();
+	private Driver driver = new Driver();
 
 	public SettingsUI() {
-		this.setLayout(new BorderLayout());
+		frame.setBounds(0, 0, 800, 800);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new BorderLayout());
 
 		// For cross platform performance.
 		try {
-			UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
-		}catch (Exception e) {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		this.setBounds(100, 100, 607, 607);
-		contentPane = this.getContentPane();
-		contentPane.setLayout(new BorderLayout());
-
-
-		createButtons();
-		createTop();
-		createRight();
-		createBottom();
-
-		this.setVisible(true);
-		this.setResizable(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
-
-
-
-	public void createBottom(){
-		bottomPanel = new JPanel();
-		bottomPanel.setLayout(new GridLayout(1,2));
-
-		contentPane.add(bottomPanel,BorderLayout.SOUTH);
-		cancel = new JButton("Cancel");
-		cancel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		bottomPanel.add(cancel);
-		apply = new JButton("Apply");
-		apply.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		bottomPanel.add(apply);
+		CreateHeadingPanel();
+		CreatePlayerSettingsPanel();
+		CreateBottomPanel();
+		frame.setVisible(true);
 
 	}
 
-	private void createButtons(){
-		centerPanel = new JPanel();
-		centerPanel.setLayout(new GridLayout(2,2));
+	//creates the bottom panel which includes Cancel, Apply and Fullscreen toggle
+	public void CreateBottomPanel() {
+		JPanel bottomPanel = new JPanel();
+		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
+		bottomPanel.setLayout(new GridLayout(4, 1));
 
-		for (int i = 0; i < 4; i++){
-			PlayerLabel lbl = new PlayerLabel();
-			lbl.setBackground(colors[i]);
-			lbl.setBorder(BorderFactory.createLineBorder(Color.WHITE,4));
-			lbl.addChangePlayerText("Player " + String.valueOf(i + 1));
-			centerPanel.add(lbl);
-			//TODO: missing a catch event for lbl.toggleColorBlindMode()
-		}
-		this.add(centerPanel, BorderLayout.CENTER);
-	}
-
-	public void createRight(){
-		rightPanel = new JPanel();
-		rightPanel.setLayout(new BorderLayout());
-
-		contentPane.add(rightPanel,BorderLayout.EAST);
-		toggleFullscreen = new JButton("Toggle Fullscreen");
+		// FULSCREEN
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		bottomPanel.add(horizontalStrut);
+		fullscreenPanel = new JPanel();
+		fullscreenPanel.setLayout(new BorderLayout());
+		JLabel fullScreen = new JLabel("Toggle Fullscreen Mode:");
+		fullscreenPanel.add(fullScreen, BorderLayout.CENTER);
+		toggleFullscreen = new JToggleButton("OFF");
 		toggleFullscreen.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		rightPanel.add(toggleFullscreen,BorderLayout.SOUTH); //TODO: Make this 100x less ugly, it looks NASTY. Grid resizes and is thus not appropriate, unless it can be locked.
+		toggleFullscreen.addActionListener(actionListener);
+		fullscreenPanel.add(toggleFullscreen, BorderLayout.SOUTH); 
+		bottomPanel.add(fullscreenPanel);
+
+		Component horizontalStrut1 = Box.createHorizontalStrut(20);
+		bottomPanel.add(horizontalStrut1);
+		
+		//CANCEL APPLY Buttons
+		cancelApplyPanel = new JPanel();
+		cancelApplyPanel.setLayout(new GridLayout(1, 2));
+		cancel = new JButton("Cancel");
+		cancel.addActionListener(actionListener);
+		cancel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		cancelApplyPanel.add(cancel);
+		apply = new JButton("Apply");
+		apply.addActionListener(actionListener);
+		apply.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		cancelApplyPanel.add(apply);
+		bottomPanel.add(cancelApplyPanel);
+
+	}
+	
+	//fetches player specific attributes and allows the user to change those attributes
+	private void CreatePlayerSettingsPanel() {
+		allplayerSettingsPanel = new JPanel();
+		allplayerSettingsPanel.setLayout(new GridLayout(2, 2));
+		
+		//creates 4 panels for 4 players
+		for (int i = 0; i < 4; i++) {
+
+			JLabel changePlayerName = new JLabel("Change Player Name:");
+			changePlayerName.setVerticalAlignment(SwingConstants.TOP);
+			JLabel colourDeficiencyMode = new JLabel("Colour Deficiency Mode:");
+			colourDeficiencyMode.setVerticalAlignment(SwingConstants.TOP);
+			
+			//fetches player objects from Driver **in future iterations this will be fetched from SetupAGame
+			playersBuffer = driver.getPlayers();
+			playerSettingsPanel.add(new JPanel());
+			playerSettingsPanel.get(i).setLayout(new GridLayout(6,1));
+			toggleColorblind.add(new JToggleButton("Disabled"));
+			toggleColorblind.get(i).addActionListener(actionListener);
+			if (playersBuffer.get(i).getColorblindSetting()) {
+				toggleColorblind.get(i).doClick();
+				toggleColorblind.get(i).setText("Enabled");
+			}
+			playerNameField.add(new JTextField());
+			playerNameField.get(i).setColumns(10);
+			playerNameField.get(i).setText(playersBuffer.get(i).getName());
+			playerSettingsPanel.get(i).setBackground(playersBuffer.get(i).getColor());
+			playerSettingsPanel.get(i).add(changePlayerName);
+			playerSettingsPanel.get(i).add(playerNameField.get(i));
+			Component horizontalStrut1 = Box.createHorizontalStrut(20);
+			playerSettingsPanel.get(i).add(horizontalStrut1);
+			playerSettingsPanel.get(i).add(colourDeficiencyMode);
+			playerSettingsPanel.get(i).add(toggleColorblind.get(i));
+			Component horizontalStrut2 = Box.createHorizontalStrut(20);
+			playerSettingsPanel.get(i).add(horizontalStrut2);
+			allplayerSettingsPanel.add(playerSettingsPanel.get(i));
+			if (i % 2 == 0) {
+				Component verticalStrut = Box.createVerticalStrut(5);
+				allplayerSettingsPanel.add(verticalStrut);
+			}
+		}
+
+		frame.getContentPane().add(allplayerSettingsPanel, BorderLayout.CENTER);
 	}
 
-	public void createTop(){
-		topPanel = new JPanel();
-		topPanel.setLayout(new FlowLayout());
+	
+	//creates the heading
+	public void CreateHeadingPanel() {
+		headingPanel = new JPanel();
+		// headingPanel.setLayout(new FlowLayout());
 
-		contentPane.add(topPanel,BorderLayout.NORTH);
-		topLabel =  new JLabel("           Settings");
-		topLabel.setPreferredSize((new Dimension(350,100)));
-		topLabel.setFont(new Font("Tahoma",Font.BOLD,35));
-		topLabel.setHorizontalAlignment(JLabel.CENTER);
-		topLabel.setBackground(Color.cyan);
-		topLabel.setVerticalAlignment(JLabel.CENTER);
+		heading = new JLabel("Settings");
+		// heading.setPreferredSize((new Dimension(350,100)));
+		heading.setFont(new Font("Tahoma", Font.BOLD, 35));
+		heading.setHorizontalAlignment(JLabel.CENTER);
+		heading.setVerticalAlignment(JLabel.CENTER);
 
-		topPanel.add(topLabel);
+		headingPanel.add(heading);
 
-		rigidArea = Box.createRigidArea(new Dimension(125, 20));
-		topPanel.add(rigidArea);
+		frame.getContentPane().add(headingPanel, BorderLayout.NORTH);
 
 	}
 
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-	@Override
-	public void mouseExited(MouseEvent e) {}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// get the object that was selected in the gui
-		Object selected = e.getSource();
-		System.out.println("Got to the selection code");
+	//ActionListener to perform all the actions
+	ActionListener actionListener = new ActionListener() {
+		public void actionPerformed(ActionEvent e)
 
-		if (selected.equals(toggleFullscreen) )
-		{	
-			//this code works, but getting here doesn't occur.
-			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			this.setVisible(true);
-			this.pack();
+		{
+
+			if (e.getSource() == toggleColorblind.get(0)) {
+				if (toggleColorblind.get(0).getText() == "Disabled") {
+					toggleColorblind.get(0).setText("Enabled");
+					settings.addBuffer("p1.toggleColorblind");
+				} else
+					toggleColorblind.get(0).setText("Disabled");
+			}
+
+			if (e.getSource() == toggleColorblind.get(1)) {
+				if (toggleColorblind.get(1).getText() == "Disabled") {
+					toggleColorblind.get(1).setText("Enabled");
+					settings.addBuffer("p2.toggleColorblind");
+
+				} else
+					toggleColorblind.get(1).setText("Disabled");
+			}
+
+			if (e.getSource() == toggleColorblind.get(2)) {
+				if (toggleColorblind.get(2).getText() == "Disabled") {
+					toggleColorblind.get(2).setText("Enabled");
+					settings.addBuffer("p3.toggleColorblind");
+
+				} else
+					toggleColorblind.get(2).setText("Disabled");
+			}
+
+			if (e.getSource() == toggleColorblind.get(3)) {
+				if (toggleColorblind.get(3).getText() == "Disabled") {
+					toggleColorblind.get(3).setText("Enabled");
+					settings.addBuffer("p4.toggleColorblind");
+
+				} else
+					toggleColorblind.get(3).setText("Disabled");
+			}
+
+			if (e.getSource() == toggleFullscreen) {
+				if (toggleFullscreen.getText() == "OFF") {
+					toggleFullscreen.setText("ON");
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					frame.setUndecorated(true);
+					frame.setVisible(true);
+				} else {
+					toggleFullscreen.setText("OFF");
+					frame.setBounds(0, 0, 800, 800);
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame.setVisible(true);
+				}
+
+			}
+			
+			if (e.getSource() == apply) {
+				
+				int input = JOptionPane.showConfirmDialog(null, 
+		                "Do you want to apply changes?", "Select an Option...",JOptionPane.YES_NO_OPTION);
+				if (input == 0) 
+				{
+					
+					playerNameField.forEach(i->settings.addNameBuffer(i.getText()));
+					settings.applySettings();
+					frame.dispose();
+				}
+
+			}
+			
+			if (e.getSource() == cancel) 
+			{
+				int input = JOptionPane.showConfirmDialog(null, 
+		                "Do you want to revert changes?", "Select an Option...",JOptionPane.YES_NO_OPTION);
+				if (input == 0) 
+				{
+					playerNameField.clear();
+					settings.declineSettings();
+					frame.dispose();
+				}
+
+			}
+			;
+
 
 		}
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {}
+	};
+
 }

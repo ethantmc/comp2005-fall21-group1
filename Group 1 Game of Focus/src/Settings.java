@@ -1,31 +1,56 @@
 import java.util.ArrayList;
 
 public class Settings {
-	private ArrayList<String> settingsBuffer; //note that other than invalid setting combinations being entered, our use cases do not actually require a buffer.
-	private ArrayList<String> customNames;
+	private ArrayList<String> settingsBuffer = new ArrayList<String>();
+	private ArrayList<String> customNamesBuffer = new ArrayList<String>();
+	private ArrayList<Player> playersBuffer = new ArrayList<Player>();
+	private Driver driver = new Driver();
 
+	public  Settings()
+	{
+		playersBuffer = driver.getPlayers();
+		
+	}
 	public void addBuffer(String setting) {
 		settingsBuffer.add(setting);
 	}
-	public void addName(String name) {
-		customNames.add(name);
+	public void addNameBuffer(String name) {
+		customNamesBuffer.add(name);
 	}
 	public void applySettings() {
-		//TODO: Method Stub
+		
+		//apply toggleColorblind
 		settingsBuffer.stream()
-		.forEach( this::doAnySetting );
+		.forEach( i -> 
+		{
+			if (i == "p1.toggleColorblind")
+			{
+				playersBuffer.get(0).toggleColorblindSetting();
+			}
+			if (i == "p2.toggleColorblind")
+			{
+				playersBuffer.get(1).toggleColorblindSetting();
+			}
+			if (i == "p3.toggleColorblind")
+			{
+				playersBuffer.get(2).toggleColorblindSetting();
+			}
+			if (i == "p4.toggleColorblind")
+			{
+				playersBuffer.get(3).toggleColorblindSetting();
+			}
+			
+		});
+		
+		//apply player names
+		for(int j = 0; j<4; j++)
+		{
+			playersBuffer.get(j).setName(customNamesBuffer.get(j));
+		};
 	}
 	public void declineSettings() {
-		//TODO: Finish method - May be complete depending on SettingsUI Implementation.
 		settingsBuffer.clear();
-		customNames.clear();
+		customNamesBuffer.clear();
 	}
 
-	public void doAnySetting(String setting) {
-		//large collection of ifs
-		if (setting == "toggleFullscreen")
-		{
-			; //do nothing, right now. We'll need to change this when we have other Jframes, I think. 
-		}
-	}
 }

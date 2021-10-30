@@ -1,19 +1,22 @@
+import java.awt.Color;
 
 public class Player {
 	//MAJOR NOTE: these attributes being private is ALMOST DEFINITELY a problem. AFAIK, private attributes play poorly with subclasses. Not 100% though.
-	private static String name; //Not set as default player name slightly changes for each. Static to appease Turn class.
+	private String name; //Not set as default player name slightly changes for each. Static to appease Turn class.
 	private PlayerType type;  //This is an Enumerated Type!
 	private Boolean isColorblindEnabled = false;
+	private Color color;
 	private int reserveCount = 13;
 	private int capturedCount = 0;
 	private int ownTokensCaptured= 0; //IMO, rename to tokensLost
+	
 	public Player(String name, PlayerType type, Boolean colorblindSetting) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.isColorblindEnabled = colorblindSetting;
 	}
-	public static String getName() {
+	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
@@ -30,6 +33,13 @@ public class Player {
 	}
 	public void setColorblindSetting(Boolean colorblindSetting) {
 		this.isColorblindEnabled = colorblindSetting;
+	}
+	public void toggleColorblindSetting() 
+	{
+		if(this.isColorblindEnabled)
+			this.isColorblindEnabled = false;
+		else
+			this.isColorblindEnabled = true;
 	}
 	public int getReserveCount() {
 		return reserveCount;
@@ -48,5 +58,11 @@ public class Player {
 	}
 	public void setOwnTokensCaptured(int ownTokensCaptured) {
 		this.ownTokensCaptured = ownTokensCaptured;
+	}
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
 	}
 }
