@@ -15,6 +15,13 @@ public class Token {
 		//TODO Method Stub. Here we have tokens responsible for *graphically* representing themselves.
 		//Their coordinates are fetched from the board list- wherever that is - and whatever holds the board list is responsible for telling them to redraw.
 		//NOTE: This is a double as our solution to knowing what's in a stack is by drawing the four other stack tokens "below" and in the corners of a tile.
+		if (owner.getColorblindSetting() == true && this.colorModeEnabled == false) {
+			this.colorModeEnabled = true; //this catches a source of data inconsistency if the player changes that setting during the game.
+			//This is a bad way to fix this, but better than not fixing this at all, it could otherwise persist even through save/load.
+		}
+		if (this.colorModeEnabled == true) {
+			//do colorModeThings - adding the simple triangle/circle/square/x onto the token as an image or text box.
+		}
 	}
 	public Player getOwner() {
 		return owner;

@@ -20,7 +20,7 @@ public class Stack {
 			else if (tokenOwner == stackOwner) {
 				stackOwner.incrementReserveCount(1);
 			}
-			stackContents.get(i).undraw();//TODO: Verify no further steps are nessecary to get rid of a token.
+			stackContents.get(i).undraw();//TODO: Verify no further steps are necessary to get rid of a token.
 			i++;
 		}
 
