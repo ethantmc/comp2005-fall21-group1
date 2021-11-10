@@ -51,6 +51,7 @@ public class Stack {
 			}
 		}
 	}
+
 	public int getSize() {
 		return stackContents.size();
 	}
@@ -59,5 +60,14 @@ public class Stack {
 	}
 	public void setStackContents(ArrayList<Token> stackContents) {
 		this.stackContents = stackContents;
+	}
+	public ArrayList<Token> splitStackContentsForMove(int i) { 
+		ArrayList<Token> movingList;
+		movingList = (ArrayList<Token>) stackContents.subList(0, i);
+		ArrayList<Token> remainingList;
+		remainingList = (ArrayList<Token>) stackContents.subList(i, (stackContents.size()-1)); //remainingList will be the new stack in the old place. Size-1 since indexed at zero. TODO: Test for a null list, might need special logic.
+		stackContents = remainingList; //This stack is reduced to whatever wasn't moved. 
+		return movingList;
+
 	}
 }
