@@ -7,26 +7,29 @@ public class Stack {
 		super();
 		this.stackContents = stackContents;
 	}
-	public void CaptureToken(ArrayList<Token> tileContents) {
-		int i = 5;
+	public ArrayList<Token> CaptureToken(ArrayList<Token> tileContents) {
+		//pass in the targeted tile as Tile Contents,
 		Player stackOwner = stackContents.get(0).getOwner(); //We set this value to compare if a removed token should be returned to the reserve or not.
-		while( i < this.getSize()) {
+		stackContents.addAll(tileContents); //All tokens in the to-be-captured tile are added to the stack at the bottom.
+		int i = 5; //Only tokens beyond the 5 that remain no matter what are targeted. Captured count and PiecesLost don't update til they move off the board, so no special logic is needed to handle the fact a player just lost control of a stack.
+		while( i < this.getSize()) { 
 			Player tokenOwner; //whoever owns this particular token
-			tokenOwner = stackContents.get(0).getOwner(); //arrayList .get() returns a Token object, we call the token method getOwner() to uniquely identify our player. Stack-Token-Player are thus coupled, but stack-token need to be and token needs getOwner().
-			if (tokenOwner != stackOwner){
+			tokenOwner = tileContents.get(0).getOwner(); //arrayList .get() returns a Token object, we call the token method getOwner() to uniquely identify our player. Stack-Token-Player are thus coupled, but stack-token need to be and token needs getOwner().
+			if (tokenOwner != stackOwner){ //If one of the captured tokens is not owned by the stack controller, stack controller captures it and token owner loses it.
 				stackOwner.incrementCapturedCount(1);
 				tokenOwner.incrementPiecesLost(1);
 			}
 			else if (tokenOwner == stackOwner) {
 				stackOwner.incrementReserveCount(1);
 			}
-			stackContents.get(i).undraw();//TODO: Verify no further steps are necessary to get rid of a token.
+			tileContents.get(i).undraw();//TODO: Verify no further steps are necessary to get rid of a token.
 			i++;
 		}
 
 		while (stackContents.size() > 5)	{
 			stackContents.remove(5); //I'm actually not 100% sure this will work, but it should. Lists are indexed from 0, so 5 is our 6th element and should no longer be on the board.
 		}
+		return stackContents;
 
 	}
 	public void drawStack() { 
