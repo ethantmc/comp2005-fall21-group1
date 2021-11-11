@@ -7,7 +7,7 @@ public class Stack {
 		super();
 		this.stackContents = stackContents;
 	}
-	public ArrayList<Token> CaptureToken(ArrayList<Token> tileContents) {
+	public void captureToken(ArrayList<Token> tileContents) {
 		//pass in the targeted tile as Tile Contents,
 		Player stackOwner = stackContents.get(0).getOwner(); //We set this value to compare if a removed token should be returned to the reserve or not.
 		stackContents.addAll(tileContents); //All tokens in the to-be-captured tile are added to the stack at the bottom.
@@ -29,7 +29,6 @@ public class Stack {
 		while (stackContents.size() > 5)	{
 			stackContents.remove(5); //I'm actually not 100% sure this will work, but it should. Lists are indexed from 0, so 5 is our 6th element and should no longer be on the board.
 		}
-		return stackContents;
 
 	}
 	public void drawStack() { 
