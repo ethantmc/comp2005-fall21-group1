@@ -1,15 +1,16 @@
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import java.awt.Color;
-
-public class Token extends JLabel{
-	private Player owner = null; //TODO: Verify as desired implementation of Owner. -This should be ideal for telling a Player they've lost or gained a Token, which Stack is responsible for.
-	private int xCoordinate; // May not be long-term implementation - A token knowing where it is is weird if our physical board holds them.
+public class Token extends JLabel {
+	private Player owner = null; // TODO: Verify as desired implementation of Owner. -This should be ideal for
+									// telling a Player they've lost or gained a Token, which Stack is responsible
+									// for.
+	private int xCoordinate; // May not be long-term implementation - A token knowing where it is is weird if
+								// our physical board holds them.
 	private int yCoordinate;
 	private boolean isStacked = false;
 	ImageIcon p1Icon = new ImageIcon(getClass().getResource("/Player 1 - Token.png"));
@@ -21,103 +22,79 @@ public class Token extends JLabel{
 	ImageIcon p3StackIcon = new ImageIcon(getClass().getResource("/Player 3 - StackToken.png"));
 	ImageIcon p4StackIcon = new ImageIcon(getClass().getResource("/Player 4 - StackToken.png"));
 	ImageIcon emptyStackIcon = new ImageIcon(getClass().getResource("/EmptyStack.png"));
-	public Token(Player owner, int xCoordinate, int yCoordinate) { //TODO: Verify constructor should pass in X and Y coords.
+
+	public Token(Player owner, int xCoordinate, int yCoordinate) { // TODO: Verify constructor should pass in X and Y
+																	// coords.
 		super();
 		this.owner = owner;
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
 		this.setHorizontalAlignment(SwingConstants.CENTER);
-		//this.setBackground(owner.getColor());
 		this.setBackground(Color.WHITE);
-		//this.removeActionListener(actionListener);
-		this.setMinimumSize(new Dimension(50,50));
-		//this.setFocusable(false);
-		//this.setBorderPainted(false);
-		//this.setEnabled(false);
+		this.setMinimumSize(new Dimension(50, 50));
+
 		setTokenIcon();
 
-		//this.setEnabled(false);
 	}
-	public void draw(double x,double y) {
-		//TODO Method Stub. Here we have tokens responsible for *graphically* representing themselves.
-		//Their coordinates are fetched from the board list- wherever that is - and whatever holds the board list is responsible for telling them to redraw.
-		//NOTE: This is a double as our solution to knowing what's in a stack is by drawing the four other stack tokens "below" and in the corners of a tile.
-	}
-	public void setTokenIcon()
-	{
-		if(isStacked)
-		{
-			if(owner==Driver.getPlayers().get(0))
-			{
+
+	public void setTokenIcon() {
+		if (isStacked) {
+			if (owner == Driver.getPlayers().get(0)) {
 				this.setIcon(p1StackIcon);
-			}
-			else if(owner==Driver.getPlayers().get(1))
-			{
+			} else if (owner == Driver.getPlayers().get(1)) {
 				this.setIcon(p2StackIcon);
-			}
-			else if(owner==Driver.getPlayers().get(2))
-			{
+			} else if (owner == Driver.getPlayers().get(2)) {
 				this.setIcon(p3StackIcon);
-			}
-			else if(owner==Driver.getPlayers().get(3))
-			{
+			} else if (owner == Driver.getPlayers().get(3)) {
 				this.setIcon(p4StackIcon);
-			}
-			else if(owner==null)
-			{
+			} else if (owner == null) {
 				this.setIcon(emptyStackIcon);
 			}
-		}
-		else
-		{
-			if(owner==Driver.getPlayers().get(0))
-			{
+		} else {
+			if (owner == Driver.getPlayers().get(0)) {
 				this.setIcon(p1Icon);
-			}
-			else if(owner==Driver.getPlayers().get(1))
-			{
+			} else if (owner == Driver.getPlayers().get(1)) {
 				this.setIcon(p2Icon);
-			}
-			else if(owner==Driver.getPlayers().get(2))
-			{
+			} else if (owner == Driver.getPlayers().get(2)) {
 				this.setIcon(p3Icon);
-			}
-			else if(owner==Driver.getPlayers().get(3))
-			{
+			} else if (owner == Driver.getPlayers().get(3)) {
 				this.setIcon(p4Icon);
-			}
-			else if(owner==null)
-			{
+			} else if (owner == null) {
 				this.setIcon(emptyStackIcon);
 			}
 		}
 
 	}
+
 	public Player getOwner() {
 		return owner;
 	}
+
 	public int getxCoordinate() {
 		return xCoordinate;
 	}
+
 	public int getyCoordinate() {
 		return yCoordinate;
 	}
-	
+
 	public void setOwner(Player owner) {
 		this.owner = owner;
+		setTokenIcon();
 	}
+
 	public void setxCoordinate(int xCoordinate) {
 		this.xCoordinate = xCoordinate;
 	}
+
 	public void setyCoordinate(int yCoordinate) {
 		this.yCoordinate = yCoordinate;
 	}
-	public void undraw() {
-		//TODO Method Stub. Remove the token graphically, then remove this object from memory (does GC handle that automatically?) This method is primarily called by Stack while capturing tokens.
-	}
+
 	public boolean isStacked() {
 		return isStacked;
 	}
+
 	public void setStacked(boolean isStacked) {
 		this.isStacked = isStacked;
 	}

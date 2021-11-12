@@ -13,8 +13,9 @@ public class Move {
 	public static void makeAReserveMove(Stack moveToStack) 
 	{
 		
-		moveToStack.stackToken(Turn.getCurrentPlayer().getReserveToken()); //The final version will (Turn.getCurrentPlayer().getReserveToken()) as a parameter. Which is the current player. Driver.getPlayers().get(0).getReserveToken()
+		moveToStack.stackToken(Turn.getCurrentPlayer().getReserveToken()); //Driver.getPlayers().get(0).getReserveToken()
+		Turn.nextPlayersTurn();
 		Driver.getGameUIInstance().updateStats();
-		System.out.println();
+		//System.out.println();
 	}
 }

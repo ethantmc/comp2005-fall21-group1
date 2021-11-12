@@ -9,7 +9,6 @@ public class Player {
 	private Stack<Token> reservedTokens = new Stack<Token>();
 	private Boolean isColorblindEnabled = false;
 	private Color color;
-	private int reserveCount = 13;
 	private int capturedCount = 0;
 	private int piecesLost= 0; //IMO, rename to tokensLost
 
@@ -32,8 +31,8 @@ public class Player {
 	public String getName() {
 		return name;
 	}
-	public int getPiecesLost() {
-		return piecesLost;
+	public int getTokensLeft() {
+		return 13-piecesLost;
 	}
 	public int getReserveCount() {
 		return reservedTokens.size();
@@ -68,9 +67,6 @@ public class Player {
 	}
 	public void setPiecesLost(int number) {
 		this.piecesLost = number;
-	}
-	public void setReserveCount(int reserveCount) {
-		this.reserveCount = reserveCount;
 	}
 	public void setType(PlayerType type) {
 		this.type = type;

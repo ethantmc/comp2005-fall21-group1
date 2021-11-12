@@ -1,41 +1,45 @@
-import java.util.*;
-import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.util.ArrayList;
 
-public class Stack extends JPanel{
-	
-	private ArrayList<Token> stackContents = new ArrayList<Token>(); //This class assumes that stackContents is an ordered list, with 0 through 4 representing the top of the stack, in order.
-	private JPanel center = new JPanel(),north = new JPanel(),west = new JPanel(),east = new JPanel(),south = new JPanel();
-	
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+public class Stack extends JPanel {
+
+	private ArrayList<Token> stackContents = new ArrayList<Token>(); // This class assumes that stackContents is an
+																		// ordered list, with 0 through 4 representing
+																		// the top of the stack, in order.
+	private JPanel center = new JPanel(), north = new JPanel(), west = new JPanel(), east = new JPanel(),
+			south = new JPanel();
+
 	private ArrayList<JLabel> notPartofStack = new ArrayList<JLabel>();
-	private int xcoord, ycoord;  // location in the grid
+	private int xcoord, ycoord; // location in the grid
 	ImageIcon emptyStackIcon = new ImageIcon(getClass().getResource("/EmptyStack.png"));
-	
+
 	public Stack(int xcoord, int ycoord) {
 		super();
-		this.setSize(50,50);
+		this.setSize(50, 50);
 		this.xcoord = xcoord;
 		this.ycoord = ycoord;
-		
+
 		setLayout(new BorderLayout(0, 0));
 		setBackground(Color.WHITE);
 		center.setLayout(new BorderLayout(0, 0));
-		center.setPreferredSize(new Dimension(50,50));
+		center.setPreferredSize(new Dimension(50, 50));
 		center.setBackground(Color.WHITE);
-		
-		for(int i = 0; i<4; i++)
-		{
+
+		for (int i = 0; i < 4; i++) {
 			notPartofStack.add(new JLabel());
 			notPartofStack.get(i).setBackground(Color.WHITE);
 			notPartofStack.get(i).setFocusable(false);
 			notPartofStack.get(i).setHorizontalAlignment(SwingConstants.CENTER);
 			notPartofStack.get(i).setIcon(emptyStackIcon);
 		}
-		//notPartofBoard.get(0).removeActionListener(notPartofBoard.get(0).);
+
 		north.setLayout(new BorderLayout(0, 0));
 		north.setBackground(Color.WHITE);
 		north.add(notPartofStack.get(0));
@@ -53,163 +57,106 @@ public class Stack extends JPanel{
 		add(east, BorderLayout.EAST);
 		add(south, BorderLayout.SOUTH);
 		add(west, BorderLayout.WEST);
-		
-	}
-	
-	/*
-	 * 				notPartofBoard.get(j).setBackground(Color.WHITE);
-					
-	 * 
-	 * 
-	 * public void CaptureToken(Stack<Token> tileContents) {
-		int i = 5;
-		Player stackOwner = stackContents.get(0).getOwner(); //We set this value to compare if a removed token should be returned to the reserve or not.
-		while( i < this.getStackSize()) {
-			Player tokenOwner; //whoever owns this particular token
-			tokenOwner = stackContents.get(0).getOwner(); //arrayList .get() returns a Token object, we call the token method getOwner() to uniquely identify our player. Stack-Token-Player are thus coupled, but stack-token need to be and token needs getOwner().
-			if (tokenOwner != stackOwner){
-				stackOwner.incrementCapturedCount(1);
-				tokenOwner.incrementPiecesLost(1);
-			}
-			else if (tokenOwner == stackOwner) {
-				stackOwner.incrementReserveCount(1);
-			}
-			stackContents.get(i).undraw();//TODO: Verify no further steps are nessecary to get rid of a token.
-			i++;
-		}
-
-		while (stackContents.size() > 5)	{
-			stackContents.remove(5); //I'm actually not 100% sure this will work, but it should. Lists are indexed from 0, so 5 is our 6th element and should no longer be on the board.
-		}
 
 	}
-	*/
-    public ArrayList<Token> moveTokens(int numberofTokens) { 
-        ArrayList<Token> movingList;
-        movingList = (ArrayList<Token>) stackContents.subList(numberofTokens, (stackContents.size()-1));
-        ArrayList<Token> remainingList;
-        remainingList = (ArrayList<Token>) stackContents.subList(0, numberofTokens); //remainingList will be the new stack in the old place. Size-1 since indexed at zero. TODO: Test for a null list, might need special logic.
-        stackContents = remainingList; //This stack is reduced to whatever wasn't moved.
-        updateStackDisplay();
-        return movingList;
 
-    }
+	public ArrayList<Token> moveTokens(int numberofTokens) {
+		ArrayList<Token> movingList;
+		movingList = (ArrayList<Token>) stackContents.subList(numberofTokens, (stackContents.size() - 1));
+		ArrayList<Token> remainingList;
+		remainingList = (ArrayList<Token>) stackContents.subList(0, numberofTokens); // remainingList will be the new
+																						// stack in the old place.
+																						// Size-1 since indexed at zero.
+																						// TODO: Test for a null list,
+																						// might need special logic.
+		stackContents = remainingList; // This stack is reduced to whatever wasn't moved.
+		updateStackDisplay();
+		return movingList;
 
-	public void updateStackDisplay()
-	{
-		for(int i=0; i<=5; i++)
-		{
-			if(i==stackContents.size()-1)
-			{
+	}
+
+	public void updateStackDisplay() {
+		for (int i = 0; i <= 5; i++) {
+			if (i == stackContents.size() - 1) {
 				center.removeAll();
 				stackContents.get(i).setStacked(false);
 				stackContents.get(i).setTokenIcon();
 				center.add(stackContents.get(i), BorderLayout.CENTER);
-			}
-			else if(i==stackContents.size()-2)
-			{
+			} else if (i == stackContents.size() - 2) {
 				north.removeAll();
 				stackContents.get(i).setStacked(true);
 				stackContents.get(i).setTokenIcon();
 				north.add(stackContents.get(i), BorderLayout.CENTER);
-			}
-			else if(i==stackContents.size()-3)
-			{
+			} else if (i == stackContents.size() - 3) {
 				east.removeAll();
 				stackContents.get(i).setStacked(true);
 				stackContents.get(i).setTokenIcon();
 				east.add(stackContents.get(i), BorderLayout.CENTER);
-			}
-			else if(i==stackContents.size()-4)
-			{
+			} else if (i == stackContents.size() - 4) {
 				south.removeAll();
 				stackContents.get(i).setStacked(true);
 				stackContents.get(i).setTokenIcon();
 				south.add(stackContents.get(i), BorderLayout.CENTER);
-			}
-			else if(i==stackContents.size()-5)
-			{
+			} else if (i == stackContents.size() - 5) {
 				west.removeAll();
 				stackContents.get(i).setStacked(true);
 				stackContents.get(i).setTokenIcon();
 				west.add(stackContents.get(i), BorderLayout.CENTER);
-			}
-			else
+			} else
 				break;
 		}
 	}
-	
-	public void stackToken(Token token)
-	{
+
+	public void stackToken(Token token) {
 		token.setxCoordinate(xcoord);
 		token.setyCoordinate(ycoord);
 		stackContents.add(token);
-		
-		if(stackContents.size()==6)
-		{
+
+		if (stackContents.size() == 6) {
 			removeToken();
 		}
-		
+
 		updateStackDisplay();
 	}
-		
 
-	
-	public void removeToken()
-	{
+	// Handles Capture Token and Reserve Token
+	public void removeToken() {
 		Token temp;
 		temp = stackContents.remove(0);
-		
-		if(temp.getOwner()==Turn.getCurrentPlayer())
-		{
-			Turn.getCurrentPlayer().reserveAToken(temp);//Add to reserve
-		}
-		else
-		{
+
+		if (temp.getOwner() == Turn.getCurrentPlayer()) {
+			Turn.getCurrentPlayer().reserveAToken(temp);// Add to reserve
+		} else {
 			temp.getOwner().incrementPiecesLost();
 			temp.setOwner(null);
 			temp.setStacked(false);
 			temp.setTokenIcon();
 			Turn.getCurrentPlayer().incrementCapturedCount();
 		}
-		
-	}
-	
-	public void drawStack() { 
-		int i;
-		for(i=0; i < 5; i++) {
 
-			switch(i) {
-			case 0: stackContents.get(i).draw(i, i); //TODO: Input the double-type coordinates so that each token can successfully draw itself. These should be fixed position- 1(which is 0) is central, 2 is top-left, 3 top-right, 4 bottom-left, and 5 bottom-right.
-			break;
-			case 1: stackContents.get(i).draw(i, i); //Until we know what coordinate responds to where, this code can't be worked on further.
-			break;
-			case 2: stackContents.get(i).draw(i, i);
-			break;
-			case 3: stackContents.get(i).draw(i, i);
-			break;
-			case 4: stackContents.get(i).draw(i, i);
-			break;
-			default: break;
-			}
-		}
 	}
-	
+
 	public Player getStackOwner() {
-		return stackContents.get(stackContents.size()-1).getOwner();
+		return stackContents.get(stackContents.size() - 1).getOwner();
 	}
-	
+
 	public int getStackSize() {
 		return stackContents.size();
 	}
-	
+
 	public ArrayList<Token> getStackContents() {
 		return stackContents;
 	}
-	
+
 	public void setStackContents(ArrayList<Token> stackContents) {
 		this.stackContents = stackContents;
 	}
-    public int getXcoord()              { return xcoord; }
-    public int getYcoord()              { return ycoord; }
+
+	public int getXcoord() {
+		return xcoord;
+	}
+
+	public int getYcoord() {
+		return ycoord;
+	}
 }
