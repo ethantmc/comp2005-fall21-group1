@@ -15,6 +15,7 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JOptionPane;
+import java.awt.EventQueue;
 
 public class SettingsUI {
 	private JPanel headingPanel, allplayerSettingsPanel, fullscreenPanel, cancelApplyPanel;

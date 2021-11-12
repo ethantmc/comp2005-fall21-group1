@@ -2,9 +2,15 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Turn {
-	private Player currentPlayer = null;
-	private int currentPlayerAsNumber;
-	private ArrayList<Player> listOfPlayers;
+	private static Player currentPlayer = null;
+	private static int currentPlayerAsNumber;
+	private static ArrayList<Player> listOfPlayers = Driver.getPlayers();
+	
+	
+//	public Turn()
+//	{
+//		initiatePlayerTurn();
+//	}
 
 	private void generateNextPlayer() {
 		currentPlayerAsNumber += 1;
@@ -12,15 +18,15 @@ public class Turn {
 		currentPlayer = listOfPlayers.get(currentPlayerAsNumber); //Retrieves the Player object in the space after the current player. 
 	}
 
-	public String getCurrentPlayer() {
-		return currentPlayer.getName();
+	public static Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	//	private void setCurrentPlayer(Player currentPlayer) { //The actual method for settings whose next. Should not be used, but may be necessary in a future iteration.
 	//		this.currentPlayer = currentPlayer;
 	//	}
 
-	public void initiatePlayerTurn() { //Only to be called the very first turn for the game.
+	public static void initiatePlayerTurn() { //Only to be called the very first turn for the game.
 		int playerTurn;
 		playerTurn = ThreadLocalRandom.current().nextInt(0, 4); //Selects from [0,4)
 		currentPlayer = listOfPlayers.get(playerTurn);
