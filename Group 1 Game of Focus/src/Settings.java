@@ -4,11 +4,10 @@ public class Settings {
 	private ArrayList<String> settingsBuffer = new ArrayList<String>();
 	private ArrayList<String> customNamesBuffer = new ArrayList<String>();
 	private ArrayList<Player> playersBuffer = new ArrayList<Player>();
-	private Driver driver = new Driver();
 
 	public  Settings()
 	{
-		playersBuffer = driver.getPlayers();
+		playersBuffer = SetupAGame.getPlayers();
 		
 	}
 	public void addBuffer(String setting) {

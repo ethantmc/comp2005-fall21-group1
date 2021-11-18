@@ -62,14 +62,14 @@ public class GameUI extends JFrame {
 		// create player labels
 		for (int i = 0; i < 4; i++) {
 			playerCardPanel.add(new JPanel());
-			playerCardPanel.get(i).setBackground(Driver.getPlayers().get(i).getColor());
+			playerCardPanel.get(i).setBackground(SetupAGame.getPlayers().get(i).getColor());
 			panelFlowLayout.add((FlowLayout) playerCardPanel.get(i).getLayout());
 			panelFlowLayout.get(i).setVgap(10);
 			panelFlowLayout.get(i).setHgap(30);
 			panelFlowLayout.get(i).setAlignOnBaseline(true);
 			playerInfoPanel.add(new JPanel());
 			playerCardPanel.get(i).add(playerInfoPanel.get(i));
-			playerNameLabel.add(new JLabel(Driver.getPlayers().get(i).getName()));
+			playerNameLabel.add(new JLabel(SetupAGame.getPlayers().get(i).getName()));
 			playerInfoPanel.get(i).add(playerNameLabel.get(i));
 			playerStatsPanel.add(new JPanel());
 			playerStatsPanel.get(i).setLayout(new GridLayout(2, 2, 10, 5));
@@ -77,13 +77,13 @@ public class GameUI extends JFrame {
 			playerDominationLabel.add(new JLabel("Domination: "));
 			playerStatsPanel.get(i).add(playerDominationLabel.get(i));
 			playerReservesLabel
-					.add(new JLabel("Reserves: " + String.valueOf(Driver.getPlayers().get(i).getReserveCount())));
+					.add(new JLabel("Reserves: " + String.valueOf(SetupAGame.getPlayers().get(i).getReserveCount())));
 			playerStatsPanel.get(i).add(playerReservesLabel.get(i));
 			playerTokensLeftLabel
-					.add(new JLabel("Tokens Left: " + String.valueOf(Driver.getPlayers().get(i).getTokensLeft())));
+					.add(new JLabel("Tokens Left: " + String.valueOf(SetupAGame.getPlayers().get(i).getTokensLeft())));
 			playerStatsPanel.get(i).add(playerTokensLeftLabel.get(i));
 			playerCapturedLabel
-					.add(new JLabel("Captured: " + String.valueOf(Driver.getPlayers().get(i).getCapturedCount())));
+					.add(new JLabel("Captured: " + String.valueOf(SetupAGame.getPlayers().get(i).getCapturedCount())));
 			playerStatsPanel.get(i).add(playerCapturedLabel.get(i));
 			paddingPanel.add(new JPanel());
 			paddingPanel.get(i).setBackground(Color.WHITE);
@@ -146,11 +146,11 @@ public class GameUI extends JFrame {
 		whosTurn.setText(Turn.getCurrentPlayer().getName() + "'s Turn");
 		for (int i = 0; i < 4; i++) {
 			playerReservesLabel.get(i)
-					.setText("Reserves: " + String.valueOf(Driver.getPlayers().get(i).getReserveCount()));
+					.setText("Reserves: " + String.valueOf(SetupAGame.getPlayers().get(i).getReserveCount()));
 			playerCapturedLabel.get(i)
-					.setText("Captured: " + String.valueOf(Driver.getPlayers().get(i).getCapturedCount()));
+					.setText("Captured: " + String.valueOf(SetupAGame.getPlayers().get(i).getCapturedCount()));
 			playerTokensLeftLabel.get(i)
-					.setText("Tokens Left: " + String.valueOf(Driver.getPlayers().get(i).getTokensLeft()));
+					.setText("Tokens Left: " + String.valueOf(SetupAGame.getPlayers().get(i).getTokensLeft()));
 		}
 
 	}

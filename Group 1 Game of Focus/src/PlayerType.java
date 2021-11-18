@@ -1,3 +1,4 @@
+
 public enum PlayerType {
-	CPU, HUMAN
+CPU, HUMAN
 }

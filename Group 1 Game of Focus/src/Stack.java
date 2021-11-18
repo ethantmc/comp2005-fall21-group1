@@ -108,8 +108,6 @@ public class Stack extends JPanel {
 	}
 
 	public void stackToken(Token token) {
-		token.setxCoordinate(xcoord);
-		token.setyCoordinate(ycoord);
 		stackContents.add(token);
 
 		if (stackContents.size() == 6) {

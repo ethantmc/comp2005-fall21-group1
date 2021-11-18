@@ -4,7 +4,6 @@ public class CPUPlayer extends Player {
 
 	public CPUPlayer(String name, PlayerType type, Boolean colorblindSetting, DifficultyType difficulty) {
 		super(name, type, colorblindSetting);
-		this.difficulty = difficulty;
 	}
 
 	public void cpuDoMove() {

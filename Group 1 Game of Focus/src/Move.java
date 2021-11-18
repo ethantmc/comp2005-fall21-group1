@@ -15,7 +15,7 @@ public class Move {
 		
 		moveToStack.stackToken(Turn.getCurrentPlayer().getReserveToken()); //Driver.getPlayers().get(0).getReserveToken()
 		Turn.nextPlayersTurn();
-		Driver.getGameUIInstance().updateStats();
+		SetupAGame.getGameUIInstance().updateStats();
 		//System.out.println();
 	}
 }

@@ -28,7 +28,7 @@ public class SettingsUI {
 	private ArrayList<JPanel> playerSettingsPanel = new ArrayList<JPanel>();
 	private ArrayList<JTextField> playerNameField = new ArrayList<JTextField>();
 	private Settings settings = new Settings();
-	private Driver driver = new Driver();
+	private SetupAGame driver = new SetupAGame();
 
 	public SettingsUI() {
 		frame.setBounds(0, 0, 800, 800);

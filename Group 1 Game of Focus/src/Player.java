@@ -7,6 +7,7 @@ public class Player {
 	private String name; //Not set as default player name slightly changes for each. Static to appease Turn class.
 	private PlayerType type;  //This is an Enumerated Type!
 	private Stack<Token> reservedTokens = new Stack<Token>();
+	private Stack<Token> Tokens = new Stack<Token>();
 	private Boolean isColorblindEnabled = false;
 	private Color color;
 	private int capturedCount = 0;
@@ -33,6 +34,12 @@ public class Player {
 	}
 	public int getTokensLeft() {
 		return 13-piecesLost;
+	}
+	public Stack<Token> getTokens() {
+		return Tokens;
+	}
+	public void setTokens(Stack<Token> tokens) {
+		Tokens = tokens;
 	}
 	public int getReserveCount() {
 		return reservedTokens.size();

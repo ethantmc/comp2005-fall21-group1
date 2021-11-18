@@ -4,17 +4,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Turn {
 	private static Player currentPlayer = null;
 	private static int currentPlayerAsNumber;
-	private static ArrayList<Player> listOfPlayers = Driver.getPlayers();
+	private static ArrayList<Player> listOfPlayers = SetupAGame.getPlayers();
 
 	private static void generateNextPlayer() {
 		currentPlayerAsNumber += 1;
 		currentPlayerAsNumber = ((currentPlayerAsNumber) % 4); // If the number would be 4, it loops around to 0
-		// instead.
+																// instead.
 		currentPlayer = listOfPlayers.get(currentPlayerAsNumber); // Retrieves the Player object in the space after the
-		// current player.
-		if(currentPlayer.getTokensLeft() <= 0) {
-			generateNextPlayer();
-		}
+																	// current player.
 	}
 
 	public static Player getCurrentPlayer() {

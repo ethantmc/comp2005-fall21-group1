@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,12 +13,8 @@ import javax.swing.JPopupMenu;
 public class BoardUI extends JPanel {
 
 	// private JFrame frame;
-	private ArrayList<Player> playersBuffer = new ArrayList<Player>();
-	private ArrayList<Token> tokensBuffer = new ArrayList<Token>();
 	private ArrayList<Token> testReserves = new ArrayList<Token>();
-	private ArrayList<JPanel> notPartofBoard = new ArrayList<JPanel>();
-	private Player player;
-	private boolean cond1, cond2, cond3, cond4, cond1p1, cond2p1, cond1p2, cond2p2, cond1p3, cond2p3;
+	private boolean cond1, cond2, cond3, cond4;
 	private Stack[][] stacks;
 	private int x, y;
 	private static Stack clicked = null;
@@ -44,11 +39,8 @@ public class BoardUI extends JPanel {
 		// this.setBounds(100, 100, 900, 600);
 		// this.setLayout(new GridLayout(8, 8, 5, 5));
 
-		playersBuffer = Driver.getPlayers();
-
-		stacks = new Stack[8][8];
-		int i = 0;// to iterate tokensBuffer
-		int j = 0;// to iterate notPartofBoard
+		Board.generateStacksAndTokens();
+		stacks = Board.getStacks();
 
 		for (x = 0; x < 8; x++) {
 			for (y = 0; y < 8; y++) {
@@ -58,53 +50,16 @@ public class BoardUI extends JPanel {
 				cond3 = (y == 7 && (x == 1 || x == 6));
 				cond4 = (y == 0 && (x == 1 || x == 6));
 
-				// Conditions for Player 1's token placement
-				cond1p1 = (y < 4 && (x == 0 || x == 2));
-				cond2p1 = (x > 3 && (y == 1 || y == 3));
-				// Conditions for Player 2's token placement
-				cond1p2 = (y < 4 && (x == 1 || x == 3));
-				cond2p2 = (x < 4 && (y == 5 || y == 7));
-				// Conditions for Player 3's token placement
-				cond1p3 = (y > 3 && (x == 5 || x == 7));
-				cond2p3 = (x < 4 && (y == 4 || y == 6));
-
 				// When position is invalid
 				if (cond1 || cond2 || cond3 || cond4) {
-					notPartofBoard.add(new JPanel());
-					notPartofBoard.get(j).setBackground(Color.WHITE);
-					stacks[x][y] = new Stack(x, y);
-					stacks[x][y].setSize(20, 20);
-					stacks[x][y].add(notPartofBoard.get(j), BorderLayout.CENTER);
 					this.add(stacks[x][y]);
-					j++;
 				}
 
 				// When position is valid
 				else {
-
-					// Switch player to generate tokens of the right amount at the right position.
-					if (cond1p1 || cond2p1)
-						player = playersBuffer.get(0);
-					else if (cond1p2 || cond2p2)
-						player = playersBuffer.get(1);
-					else if (cond1p3 || cond2p3)
-						player = playersBuffer.get(2);
-					else
-						player = playersBuffer.get(3);
-
-					// Create new tokens and add it to buffer
-					tokensBuffer.add(new Token(player, x, y));
-
-					// Create new stacks and add token
-					stacks[x][y] = new Stack(x, y);
-					// stacks[x][y].setSize(20, 20);
 					stacks[x][y].addMouseListener(MouseListener);
-					stacks[x][y].stackToken(tokensBuffer.get(i));
-
 					// add stack to frame
 					this.add(stacks[x][y]);
-
-					i++;
 				}
 
 			}
@@ -114,8 +69,8 @@ public class BoardUI extends JPanel {
 		int k = 0;
 		for (int p = 0; p < 4; p++) {
 			for (int q = 0; q < 8; q++) {
-				testReserves.add(new Token(playersBuffer.get(p), x, y));
-				playersBuffer.get(p).reserveAToken(testReserves.get(k));
+				testReserves.add(new Token(SetupAGame.getPlayers().get(p)));
+				SetupAGame.getPlayers().get(p).reserveAToken(testReserves.get(k));
 				k++;
 			}
 
