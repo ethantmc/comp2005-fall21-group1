@@ -15,18 +15,13 @@ public class SetupAGame {
 		for (int i = 0; i < 4; i++)
 		{
 			if (i % 2 == 0)
-				x = false;
+				x = false;//Colorblind false
 			else
-				x = true;
+				x = true;//Colorblind true
 			players.add(new Player("Player " + String.valueOf(i + 1), PlayerType.HUMAN, x));
 			players.get(i).setColor(colors[i]);
 		}
 		// SettingsUI stg = new SettingsUI();
-		for (int i = 0; i < 4; i++)
-		{
-			for(int j=0; j<13; j++)
-			players.get(i).getTokens().add(new Token(players.get(i)));
-		}
 
 		window = new GameUI();
 		window.setVisible(true);
