@@ -41,7 +41,7 @@ public class Token extends JLabel {
 	}
 
 	public void setTokenIcon() {
-		if (owner.getColorblindSetting())
+		if (Turn.getCurrentPlayer().getColorblindSetting())
 		{
 			if (isStacked) {
 				if (owner == SetupAGame.getPlayers().get(0)) {

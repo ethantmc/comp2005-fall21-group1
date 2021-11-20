@@ -75,6 +75,10 @@ public class Stack extends JPanel {
 
 	}
 
+	public void updateTokenDisplay() {
+		stackContents.forEach(x -> x.setTokenIcon());
+	}
+
 	public void updateStackDisplay() {
 		for (int i = 0; i <= 5; i++) {
 			if (i == stackContents.size() - 1) {
