@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.SwingUtilities;
+
 public class Turn {
 	private static Player currentPlayer = null;
 	private static int currentPlayerAsNumber;
@@ -31,5 +33,7 @@ public class Turn {
 		} else {
 			generateNextPlayer();
 		}
+		Board.updateStacksDisplay();
+		SwingUtilities.updateComponentTreeUI(SetupAGame.getGameUIInstance());
 	}
 }
