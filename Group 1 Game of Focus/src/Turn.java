@@ -33,6 +33,8 @@ public class Turn {
 		} else {
 			generateNextPlayer();
 		}
+
+		Board.updateDominationPercentageForAllPlayers();
 		Board.updateStacksDisplay();
 		SwingUtilities.updateComponentTreeUI(SetupAGame.getGameUIInstance());
 	}

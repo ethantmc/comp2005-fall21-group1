@@ -16,8 +16,8 @@ public class BoardUI extends JPanel {
 	private ArrayList<Token> testReserves = new ArrayList<Token>();
 	private boolean cond1, cond2, cond3, cond4;
 	private Stack[][] stacks;
-	private int x, y;
-	private static Stack clicked = null;
+	private int x, y, num;
+	private static Stack clicked = null, moveFrom = null, moveTo = null;
 
 	/**
 	 * Create the application.
@@ -27,7 +27,7 @@ public class BoardUI extends JPanel {
 
 		Turn.initiatePlayerTurn();
 
-		setLayout(new GridLayout(8, 8, 5, 5));
+		setLayout(new GridLayout(8, 8, 20, 15));
 
 		initialize();
 	}
@@ -40,8 +40,9 @@ public class BoardUI extends JPanel {
 		// this.setLayout(new GridLayout(8, 8, 5, 5));
 
 		Board.generateStacksAndTokens();
+		Board.updateDominationPercentageForAllPlayers();
 		stacks = Board.getStacks();
-
+		// add stacks to the board
 		for (x = 0; x < 8; x++) {
 			for (y = 0; y < 8; y++) {
 				// Conditions for invalid token positions
@@ -58,7 +59,7 @@ public class BoardUI extends JPanel {
 				// When position is valid
 				else {
 					stacks[x][y].addMouseListener(MouseListener);
-					// add stack to frame
+					// add stack to board panel
 					this.add(stacks[x][y]);
 				}
 
@@ -75,7 +76,13 @@ public class BoardUI extends JPanel {
 			}
 
 		}
-
+		// removing stack tokens for test purpose
+		stacks[4][5].removeToken();
+		stacks[4][2].removeToken();
+		stacks[4][3].removeToken();
+		stacks[2][5].removeToken();
+		stacks[2][3].removeToken();
+		Board.updateStacksDisplay();
 	}
 
 	public static Stack getClicked() {
@@ -88,27 +95,54 @@ public class BoardUI extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 
 			clicked = (Stack) e.getSource();
-			JPopupMenu popupMenu = new JPopupMenu();
-			JMenuItem playfromReserves = new JMenuItem("Play from reserves");
-			playfromReserves.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Move.makeAReserveMove(clicked);
+			if (moveFrom == null) // does not execute if the player is about to make a move
+			{
+				// create popupMenu
+				JPopupMenu popupMenu = new JPopupMenu();
+				JMenuItem playfromReserves = new JMenuItem("Play from reserves");
+				playfromReserves.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Move.makeAReserveMove(clicked);
+					}
+				});
+				// hide playfromReserves item if player has zero reserved tokens
+				if (Turn.getCurrentPlayer().getReserveCount() == 0) {
+					playfromReserves.hide();
 				}
-			});
-			if (Turn.getCurrentPlayer().getReserveCount() == 0) {
-				playfromReserves.hide();
+				popupMenu.add(playfromReserves);
+				// do not add more menu items if the stack is empty
+				if (!(clicked.getStackOwner() == null)) {
+
+					JMenuItem mntmNewMenuItem_2 = new JMenuItem("5");
+					mntmNewMenuItem_2.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							num = 5;
+							Board.highlightPossibleMoves(clicked.getXcoord(), clicked.getYcoord(), num);
+							moveFrom = clicked;
+						}
+					});
+					popupMenu.add(mntmNewMenuItem_2);
+
+					JMenuItem mntmNewMenuItem_3 = new JMenuItem("New menu item");
+					popupMenu.add(mntmNewMenuItem_3);
+
+					JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
+					popupMenu.add(mntmNewMenuItem);
+				}
+				// show popupMenu
+				popupMenu.show(e.getComponent(), e.getX(), e.getY());
+
+			} else {
+				if (Board.checkMoveValidity(moveFrom, clicked, num))// checks if the clicked stack is a valid stack to
+																	// make the move
+				{
+					moveTo = clicked;
+					// Move.makeAMultipleMove(moveFrom, moveTo, num);
+					Move.makeAReserveMove(clicked);
+					moveFrom = null;
+					moveTo = null;
+				}
 			}
-			popupMenu.add(playfromReserves);
-
-			JMenuItem mntmNewMenuItem_2 = new JMenuItem("New menu item");
-			popupMenu.add(mntmNewMenuItem_2);
-
-			JMenuItem mntmNewMenuItem_3 = new JMenuItem("New menu item");
-			popupMenu.add(mntmNewMenuItem_3);
-
-			JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
-			popupMenu.add(mntmNewMenuItem);
-			popupMenu.show(e.getComponent(), e.getX(), e.getY());
 
 		}
 	};

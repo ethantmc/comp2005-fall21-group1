@@ -11,6 +11,7 @@ public class Player {
 	private Boolean isColorblindEnabled = false;
 	private Color color;
 	private int capturedCount = 0;
+	private int domination = 0;
 	private int piecesLost= 0; //IMO, rename to tokensLost
 
 	public Player(String name, PlayerType type, Boolean colorblindSetting) {
@@ -22,6 +23,12 @@ public class Player {
 	}
 	public int getCapturedCount() {
 		return capturedCount;
+	}
+	public int getDomination() {
+		return domination;
+	}
+	public void setDomination(int domination) {
+		this.domination = domination;
 	}
 	public Color getColor() {
 		return color;

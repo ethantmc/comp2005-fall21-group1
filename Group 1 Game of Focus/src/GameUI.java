@@ -32,7 +32,7 @@ public class GameUI extends JFrame {
 
 	public GameUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 900);
+		setBounds(100, 100, 1500, 1050);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,7 +62,10 @@ public class GameUI extends JFrame {
 		// create player labels
 		for (int i = 0; i < 4; i++) {
 			playerCardPanel.add(new JPanel());
-			playerCardPanel.get(i).setBackground(SetupAGame.getPlayers().get(i).getColor());
+			if (Turn.getCurrentPlayer().getColorblindSetting())
+				playerCardPanel.get(i).setBackground(Color.BLACK);
+			else
+				playerCardPanel.get(i).setBackground(SetupAGame.getPlayers().get(i).getColor());
 			panelFlowLayout.add((FlowLayout) playerCardPanel.get(i).getLayout());
 			panelFlowLayout.get(i).setVgap(10);
 			panelFlowLayout.get(i).setHgap(30);
@@ -74,7 +77,8 @@ public class GameUI extends JFrame {
 			playerStatsPanel.add(new JPanel());
 			playerStatsPanel.get(i).setLayout(new GridLayout(2, 2, 10, 5));
 			playerInfoPanel.get(i).add(playerStatsPanel.get(i));
-			playerDominationLabel.add(new JLabel("Domination: "));
+			playerDominationLabel.add(
+					new JLabel("Domination: " + String.valueOf(SetupAGame.getPlayers().get(i).getDomination()) + "%"));
 			playerStatsPanel.get(i).add(playerDominationLabel.get(i));
 			playerReservesLabel
 					.add(new JLabel("Reserves: " + String.valueOf(SetupAGame.getPlayers().get(i).getReserveCount())));
@@ -145,16 +149,22 @@ public class GameUI extends JFrame {
 	public void updateStats() {
 		whosTurn.setText(Turn.getCurrentPlayer().getName() + "'s Turn");
 		for (int i = 0; i < 4; i++) {
+			playerDominationLabel.get(i)
+					.setText("Domination: " + String.valueOf(SetupAGame.getPlayers().get(i).getDomination()) + "%");
 			playerReservesLabel.get(i)
 					.setText("Reserves: " + String.valueOf(SetupAGame.getPlayers().get(i).getReserveCount()));
 			playerCapturedLabel.get(i)
 					.setText("Captured: " + String.valueOf(SetupAGame.getPlayers().get(i).getCapturedCount()));
 			playerTokensLeftLabel.get(i)
 					.setText("Tokens Left: " + String.valueOf(SetupAGame.getPlayers().get(i).getTokensLeft()));
+			if (Turn.getCurrentPlayer().getColorblindSetting())
+				playerCardPanel.get(i).setBackground(Color.BLACK);
+			else
+				playerCardPanel.get(i).setBackground(SetupAGame.getPlayers().get(i).getColor());
 		}
 
 	}
-	
-	public void 
+
+	// public void
 
 }

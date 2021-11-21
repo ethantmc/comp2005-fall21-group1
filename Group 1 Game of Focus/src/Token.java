@@ -14,10 +14,18 @@ public class Token extends JLabel {
 	ImageIcon p2Icon = new ImageIcon(getClass().getResource("/Player 2 - Token.png"));
 	ImageIcon p3Icon = new ImageIcon(getClass().getResource("/Player 3 - Token.png"));
 	ImageIcon p4Icon = new ImageIcon(getClass().getResource("/Player 4 - Token.png"));
+	ImageIcon p1VMIcon = new ImageIcon(getClass().getResource("/Player 1 - ValidMoveToken.png"));
+	ImageIcon p2VMIcon = new ImageIcon(getClass().getResource("/Player 2 - ValidMoveToken.png"));
+	ImageIcon p3VMIcon = new ImageIcon(getClass().getResource("/Player 3 - ValidMoveToken.png"));
+	ImageIcon p4VMIcon = new ImageIcon(getClass().getResource("/Player 4 - ValidMoveToken.png"));
 	ImageIcon p1CBIcon = new ImageIcon(getClass().getResource("/Player 1 - CBToken.png"));
 	ImageIcon p2CBIcon = new ImageIcon(getClass().getResource("/Player 2 - CBToken.png"));
 	ImageIcon p3CBIcon = new ImageIcon(getClass().getResource("/Player 3 - CBToken.png"));
 	ImageIcon p4CBIcon = new ImageIcon(getClass().getResource("/Player 4 - CBToken.png"));
+	ImageIcon p1VMCBIcon = new ImageIcon(getClass().getResource("/Player 1 - VMCBToken.png"));
+	ImageIcon p2VMCBIcon = new ImageIcon(getClass().getResource("/Player 2 - VMCBToken.png"));
+	ImageIcon p3VMCBIcon = new ImageIcon(getClass().getResource("/Player 3 - VMCBToken.png"));
+	ImageIcon p4VMCBIcon = new ImageIcon(getClass().getResource("/Player 4 - VMCBToken.png"));
 	ImageIcon p1StackIcon = new ImageIcon(getClass().getResource("/Player 1 - StackToken.png"));
 	ImageIcon p2StackIcon = new ImageIcon(getClass().getResource("/Player 2 - StackToken.png"));
 	ImageIcon p3StackIcon = new ImageIcon(getClass().getResource("/Player 3 - StackToken.png"));
@@ -27,9 +35,10 @@ public class Token extends JLabel {
 	ImageIcon p3CBStackIcon = new ImageIcon(getClass().getResource("/Player 3 - CBStackToken.png"));
 	ImageIcon p4CBStackIcon = new ImageIcon(getClass().getResource("/Player 4 - CBStackToken.png"));
 	ImageIcon emptyStackIcon = new ImageIcon(getClass().getResource("/EmptyStack.png"));
+	ImageIcon emptyStackVMIcon = new ImageIcon(getClass().getResource("/EmptyStackValidMove.png"));
 
 	public Token(Player owner) { // TODO: Verify constructor should pass in X and Y
-																	// coords.
+									// coords.
 		super();
 		this.owner = owner;
 		this.setHorizontalAlignment(SwingConstants.CENTER);
@@ -40,9 +49,35 @@ public class Token extends JLabel {
 
 	}
 
+	public void setValidMoveTokenIcon() {
+		if (Turn.getCurrentPlayer().getColorblindSetting()) {
+			if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1VMCBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2VMCBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3VMCBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4VMCBIcon);
+			}
+		} else {
+			if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1VMIcon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2VMIcon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3VMIcon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4VMIcon);
+			}
+		}
+//			else if (owner == null) {
+//			this.setIcon(emptyStackVMIcon);
+//		}
+	}
+
 	public void setTokenIcon() {
-		if (Turn.getCurrentPlayer().getColorblindSetting())
-		{
+		if (Turn.getCurrentPlayer().getColorblindSetting()) {
 			if (isStacked) {
 				if (owner == SetupAGame.getPlayers().get(0)) {
 					this.setIcon(p1CBStackIcon);
@@ -68,9 +103,7 @@ public class Token extends JLabel {
 					this.setIcon(emptyStackIcon);
 				}
 			}
-		}
-		else
-		{
+		} else {
 			if (isStacked) {
 				if (owner == SetupAGame.getPlayers().get(0)) {
 					this.setIcon(p1StackIcon);

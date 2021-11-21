@@ -2,9 +2,11 @@
 public class Move {
 
 	//private move
-	public static void makeAMultipleMove() 
+	public static void makeAMultipleMove(Stack moveFrom, Stack moveTo, int num)
 	{
 		//TODO Method stub
+		Turn.nextPlayersTurn();
+		SetupAGame.getGameUIInstance().updateStats();
 	}
 	public static void makeASingleMove() 
 	{
