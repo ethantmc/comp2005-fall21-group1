@@ -36,7 +36,7 @@ public class Stack extends JPanel {
 		// center.vgap(0);
 		// center.setPreferredSize(new Dimension(50, 50));
 		center.setBackground(Color.WHITE);
-		//
+		//s, d
 		for (int i = 0; i < 7; i++) {
 			notPartofStack.add(new JLabel());
 			notPartofStack.get(i).setBackground(Color.WHITE);
