@@ -2,22 +2,22 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class GameUI extends JFrame {
 
 	private JPanel contentPane;
-	ImageIcon p1Card = new ImageIcon(getClass().getResource("/Player 1 Card.png"));
-	ImageIcon p2Card = new ImageIcon(getClass().getResource("/Player 2 Card.png"));
-	ImageIcon p3Card = new ImageIcon(getClass().getResource("/Player 3 Card.png"));
-	ImageIcon p4Card = new ImageIcon(getClass().getResource("/Player 4 Card.png"));
 	private ArrayList<JPanel> playerCardPanel = new ArrayList<JPanel>();
 	private ArrayList<JPanel> playerInfoPanel = new ArrayList<JPanel>();
 	private ArrayList<JPanel> playerStatsPanel = new ArrayList<JPanel>();
@@ -27,8 +27,8 @@ public class GameUI extends JFrame {
 	private ArrayList<JLabel> playerReservesLabel = new ArrayList<JLabel>();
 	private ArrayList<JLabel> playerTokensLeftLabel = new ArrayList<JLabel>();
 	private ArrayList<JLabel> playerCapturedLabel = new ArrayList<JLabel>();
-	private ArrayList<FlowLayout> panelFlowLayout = new ArrayList<FlowLayout>();
-	private JLabel whosTurn = new JLabel();
+	// private ArrayList<FlowLayout> panelFlowLayout = new ArrayList<FlowLayout>();
+	private static JLabel whosTurn = new JLabel();
 
 	public GameUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,12 +66,25 @@ public class GameUI extends JFrame {
 				playerCardPanel.get(i).setBackground(Color.BLACK);
 			else
 				playerCardPanel.get(i).setBackground(SetupAGame.getPlayers().get(i).getColor());
-			panelFlowLayout.add((FlowLayout) playerCardPanel.get(i).getLayout());
-			panelFlowLayout.get(i).setVgap(10);
-			panelFlowLayout.get(i).setHgap(30);
-			panelFlowLayout.get(i).setAlignOnBaseline(true);
+//			panelFlowLayout.add((FlowLayout) playerCardPanel.get(i).getLayout());
+//			panelFlowLayout.get(i).setVgap(10);
+//			panelFlowLayout.get(i).setHgap(30);
+//			panelFlowLayout.get(i).setAlignOnBaseline(true);
 			playerInfoPanel.add(new JPanel());
-			playerCardPanel.get(i).add(playerInfoPanel.get(i));
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[] { 40, 100, 40, 0 };
+			gbl_panel.rowHeights = new int[] { 20, 17, 20, 0 };
+			gbl_panel.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+			gbl_panel.rowWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+			// panel.setLayout(gbl_panel);
+			playerCardPanel.get(i).setLayout(gbl_panel);
+			GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+			gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+			gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnNewButton.gridx = 1;
+			gbc_btnNewButton.gridy = 1;
+			// panel.add(btnNewButton, gbc_btnNewButton);
+			playerCardPanel.get(i).add(playerInfoPanel.get(i), gbc_btnNewButton);
 			playerNameLabel.add(new JLabel(SetupAGame.getPlayers().get(i).getName()));
 			playerInfoPanel.get(i).add(playerNameLabel.get(i));
 			playerStatsPanel.add(new JPanel());
@@ -164,11 +177,9 @@ public class GameUI extends JFrame {
 		}
 
 	}
-	
-	public void setWinner(Player player) {
-	whosTurn.setText(player.getName() + "'s the Winner!");
-	}
 
 	// public void
-
+	public static void setWinner(Player player) {
+		whosTurn.setText(player.getName() + "'s the Winner!");
+	}
 }
