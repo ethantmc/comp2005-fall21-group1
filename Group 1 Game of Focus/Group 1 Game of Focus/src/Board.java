@@ -115,7 +115,7 @@ public class Board {
 
 	}
 
-	public static void iiterateOverBoard() {
+	public static void iterateOverBoard() {
 		// TODO Method Stub
 	}
 	

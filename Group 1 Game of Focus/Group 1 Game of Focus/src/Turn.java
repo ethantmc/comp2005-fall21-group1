@@ -13,10 +13,10 @@ public class Turn {
 		currentPlayerAsNumber = ((currentPlayerAsNumber) % 4); // If the number would be 4, it loops around to 0
 																// instead.
 		currentPlayer = listOfPlayers.get(currentPlayerAsNumber); // Retrieves the Player object in the space after the
-		if (currentPlayer.getDomination() <= 0) {
+		if (currentPlayer.getDomination() <= 0 ) {
 		generateNextPlayer();
 		}															// current player.
-		else if((currentPlayer.getDomination() == 100) && (checkForReservePieces() == 0)) {
+		else if((currentPlayer.getDomination() == 100) && (checkForReservePieces() == 0)) { //If any player other than the current one has reserve pieces, do not end the game.
 		//Winner is currentPlayer, call a method to change the current turn text to say currentPlayer is the winner.
 		GameUI.setWinner(currentPlayer);
 		}
@@ -25,7 +25,7 @@ public class Turn {
 	public static Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-	public int checkForReservePieces() {
+	public static int checkForReservePieces() { 
 	int i;
 	for(i=0; i < 4; i++) {
 		if(listOfPlayers.get(i) == currentPlayer) {
