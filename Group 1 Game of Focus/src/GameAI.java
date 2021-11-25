@@ -50,13 +50,5 @@ public class GameAI {
 		}
 	}
 
-	private Stack getValidSpace() {
-		//Method for selecting and returning a valid space's stack (which may be empty)
-		//only ensures a random space actually exists, NOT that it's in range.
-		ThreadLocalRandom.current().nextInt(0, 4); //TODO: Correct numbers for range
-		ThreadLocalRandom.current().nextInt(0, 4); //TODO: Correct numbers for range
-		//Use these numbers to select a space
-		Stack stack = new Stack(0, 0); //just to allow code to compile TODO: Remove
-		return stack;
-	}
+}
 }
