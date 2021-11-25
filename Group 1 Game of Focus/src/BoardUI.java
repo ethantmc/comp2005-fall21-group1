@@ -137,8 +137,8 @@ public class BoardUI extends JPanel {
 																	// make the move
 				{
 					moveTo = clicked;
-					// Move.makeAMultipleMove(moveFrom, moveTo, num);
-					Move.makeAReserveMove(clicked);
+					Move.makeAMove(moveFrom, moveTo, num);
+					//Move.makeAReserveMove(clicked);
 					moveFrom = null;
 					moveTo = null;
 				}
