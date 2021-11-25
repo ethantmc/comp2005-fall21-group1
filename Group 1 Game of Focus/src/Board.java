@@ -95,6 +95,18 @@ public class Board {
 		//TODO Method Stub
 	}
 
+	public static Stack getValidSpace() {
+		//Method for selecting and returning a valid space's stack (which may be empty)
+		//only ensures a random space actually exists, NOT that it's in range.
+		int x;
+		int y;
+		x = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
+		y = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
+		//Use these numbers to select a space
+		//TODO: Galib, add conditionals for the invalid spaces here, please!
+		return stacks[x][y]; 
+	}
+
 	public static void highlightPossibleMoves(int coordinateX, int coordinateY, int num) {
 
 		for (int i = 1; i <= num; i++) {
@@ -170,17 +182,5 @@ public class Board {
 			}
 		}
 
-	}
-
-	private Stack getValidSpace() {
-		//Method for selecting and returning a valid space's stack (which may be empty)
-		//only ensures a random space actually exists, NOT that it's in range.
-		int x;
-		int y;
-		x = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
-		y = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
-		//Use these numbers to select a space
-		//TODO: Galib, add conditionals for the invalid spaces here, please!
-		return stacks[x][y]; 
 	}
 }
