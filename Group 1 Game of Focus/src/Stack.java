@@ -23,6 +23,8 @@ public class Stack extends JPanel {
 	ImageIcon emptyStackBlackIcon = new ImageIcon(getClass().getResource("/EmptyStackBlack.png"));
 	ImageIcon emptyStackVMIcon = new ImageIcon(getClass().getResource("/EmptyStackValidMove.png"));
 	ImageIcon emptyStackVMCBIcon = new ImageIcon(getClass().getResource("/EmptyStackValidMoveCB.png"));
+	ImageIcon emptyStackClickedCBIcon = new ImageIcon(getClass().getResource("/EmptyStackCBClickedToken.png"));
+	ImageIcon emptyStackClickedIcon = new ImageIcon(getClass().getResource("/EmptyStackClickedToken.png"));
 
 	public Stack(int xcoord, int ycoord) {
 		super();
@@ -35,7 +37,7 @@ public class Stack extends JPanel {
 
 		center.setBackground(Color.WHITE);
 		//
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 9; i++) {
 			notPartofStack.add(new JLabel());
 			notPartofStack.get(i).setBackground(Color.WHITE);
 			notPartofStack.get(i).setFocusable(false);
@@ -45,6 +47,8 @@ public class Stack extends JPanel {
 		notPartofStack.get(4).setIcon(emptyStackVMIcon);
 		notPartofStack.get(5).setIcon(emptyStackVMCBIcon);
 		notPartofStack.get(6).setIcon(emptyStackBlackIcon);
+		notPartofStack.get(7).setIcon(emptyStackClickedCBIcon);
+		notPartofStack.get(8).setIcon(emptyStackClickedIcon);
 
 		north.setLayout(new BorderLayout(0, 0));
 		north.setBackground(Color.WHITE);
@@ -92,6 +96,18 @@ public class Stack extends JPanel {
 
 	public void updateTokenIcon() {
 		stackContents.forEach(x -> x.setTokenIcon());
+	}
+
+	public void updateClickedTokenIcon() {
+		if (!stackContents.isEmpty())
+			stackContents.get(stackContents.size() - 1).setClickedTokenIcon();
+		else {
+			if (Turn.getCurrentPlayer().getColorblindSetting())
+				center.add(notPartofStack.get(7));
+			else
+				center.add(notPartofStack.get(8));
+		}
+
 	}
 
 	public void updateVMTokenIcon() {

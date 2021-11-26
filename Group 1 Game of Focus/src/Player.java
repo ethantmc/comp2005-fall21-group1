@@ -6,6 +6,7 @@ public class Player {
 	//MAJOR NOTE: these attributes being private is ALMOST DEFINITELY a problem. AFAIK, private attributes play poorly with subclasses. Not 100% though.
 	private String name; //Not set as default player name slightly changes for each. Static to appease Turn class.
 	private PlayerType type;  //This is an Enumerated Type!
+	private DifficultyType difficulty;
 	private Stack<Token> reservedTokens = new Stack<Token>();
 	//private Stack<Token> Tokens = new Stack<Token>();
 	private Boolean isColorblindEnabled = false;
@@ -14,10 +15,11 @@ public class Player {
 	private int domination = 0;
 	private int piecesLost= 0; //IMO, rename to tokensLost
 
-	public Player(String name, PlayerType type, Boolean colorblindSetting) {
+	public Player(String name, PlayerType type, Boolean colorblindSetting, DifficultyType difficulty) {
 		super();
 		this.name = name;
 		this.type = type;
+		this.difficulty = difficulty;
 		this.isColorblindEnabled = colorblindSetting;
 		reservedTokens.clear();
 	}
@@ -52,6 +54,12 @@ public class Player {
 	}
 	public PlayerType getType() {
 		return type;
+	}
+	public DifficultyType getDifficulty() {
+		return difficulty;
+	}
+	public void setDifficulty(DifficultyType difficulty) {
+		this.difficulty = difficulty;
 	}
 	public void incrementCapturedCount() {
 		this.capturedCount++; //+= works in java AFAIK.

@@ -26,10 +26,13 @@ public class SetupAGameUI {
 
 	private JFrame frame;
 	private JButton startButton, loadButton;
-	private JPanel difficultyButtonPanel;
-	private JLabel difficulty;
-	private ArrayList<Player> playersBuffer = new ArrayList<Player>();
+	private ArrayList<JLabel> difficulty = new ArrayList<JLabel>();
+	private ArrayList<DifficultyType> difficultyType = new ArrayList<DifficultyType>();
+	private ArrayList<PlayerType> playerType = new ArrayList<PlayerType>();
+	private ArrayList<JPanel> difficultyButtonPanel = new ArrayList<JPanel>();
+	// private ArrayList<Player> playersBuffer = new ArrayList<Player>();
 	private ArrayList<JToggleButton> toggleColorblind = new ArrayList<JToggleButton>();
+	private ArrayList<Boolean> isColorblindEnabled = new ArrayList<Boolean>();
 	private ArrayList<JPanel> playerSettingsPanel = new ArrayList<JPanel>();
 	private ArrayList<JTextField> playerNameField = new ArrayList<JTextField>();
 	private ArrayList<JButton> easyButton = new ArrayList<JButton>();
@@ -47,6 +50,7 @@ public class SetupAGameUI {
 			public void run() {
 				try {
 					SetupAGameUI window = new SetupAGameUI();
+					window.frame.setLocationRelativeTo(null);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,6 +71,7 @@ public class SetupAGameUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 800, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -94,6 +99,7 @@ public class SetupAGameUI {
 		headingPanel.add(lblSetupAGame);
 
 		JPanel allplayerSettingsPanel = new JPanel();
+		allplayerSettingsPanel.setBackground(Color.WHITE);
 		GridBagConstraints gbc_allplayerSettingsPanel = new GridBagConstraints();
 		gbc_allplayerSettingsPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_allplayerSettingsPanel.fill = GridBagConstraints.BOTH;
@@ -143,11 +149,16 @@ public class SetupAGameUI {
 			// playerSettingsPanel.get(i).remove(playerNameField.get(i));
 
 			//
+			isColorblindEnabled.add(false);
 			if (i > 0) {
 				// create buttons to maintain index
 				easyButton.add(new JButton("Easy"));
 				hardButton.add(new JButton("Hard"));
 				addPlayer.add(new JButton("Add Player"));
+				difficulty.add(new JLabel("Choose Difficulty:"));
+				difficultyButtonPanel.add(new JPanel());
+				playerType.add(PlayerType.HUMAN);
+				difficultyType.add(DifficultyType.EASY);
 
 				removePlayer.add(new JButton("Remove Player"));
 				removePlayer.get(i - 1).addActionListener(actionListener);
@@ -190,7 +201,7 @@ public class SetupAGameUI {
 		}
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setBackground(UIManager.getColor("Button.background"));
+		buttonsPanel.setBackground(Color.WHITE);
 		GridBagConstraints gbc_buttonsPanel = new GridBagConstraints();
 		gbc_buttonsPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_buttonsPanel.fill = GridBagConstraints.BOTH;
@@ -218,9 +229,12 @@ public class SetupAGameUI {
 				int i = toggleColorblind.indexOf(e.getSource());
 				if (toggleColorblind.get(i).getText() == "Disabled") {
 					toggleColorblind.get(i).setText("Enabled");
-					Settings.addBuffer("p" + String.valueOf(i + 1) + ".toggleColorblind");
-				} else
+					isColorblindEnabled.set(i, true);
+				} else {
 					toggleColorblind.get(i).setText("Disabled");
+					isColorblindEnabled.set(i, false);
+				}
+
 			}
 
 			if (removePlayer.contains(e.getSource())) {
@@ -229,31 +243,30 @@ public class SetupAGameUI {
 
 				playerNameField.get(i + 1).setText("CPU");
 
-				difficulty = new JLabel("Choose Difficulty:");
-				difficulty.setHorizontalAlignment(SwingConstants.CENTER);
+				// difficulty.get(i).setHorizontalAlignment(SwingConstants.CENTER);
 				GridBagConstraints gbc_difficulty = new GridBagConstraints();
 				gbc_difficulty.anchor = GridBagConstraints.WEST;
 				gbc_difficulty.insets = new Insets(0, 0, 5, 5);
 				gbc_difficulty.gridx = 1;
 				gbc_difficulty.gridy = 4;
-				playerSettingsPanel.get(i + 1).add(difficulty, gbc_difficulty);
+				playerSettingsPanel.get(i + 1).add(difficulty.get(i), gbc_difficulty);
 
 				// Difficulty buttons
-				difficultyButtonPanel = new JPanel();
+
 				GridBagConstraints gbc_difficultyButtonPanel = new GridBagConstraints();
 				gbc_difficultyButtonPanel.insets = new Insets(0, 0, 5, 5);
 				gbc_difficultyButtonPanel.fill = GridBagConstraints.BOTH;
 				gbc_difficultyButtonPanel.gridx = 1;
 				gbc_difficultyButtonPanel.gridy = 5;
-				playerSettingsPanel.get(i + 1).add(difficultyButtonPanel, gbc_difficultyButtonPanel);
-				difficultyButtonPanel.setLayout(new GridLayout(0, 2, 20, 0));
-				difficultyButtonPanel.setBackground(colors[i + 1]);
+				playerSettingsPanel.get(i + 1).add(difficultyButtonPanel.get(i), gbc_difficultyButtonPanel);
+				difficultyButtonPanel.get(i).setLayout(new GridLayout(0, 2, 20, 0));
+				difficultyButtonPanel.get(i).setBackground(colors[i + 1]);
 
 				easyButton.get(i).addActionListener(actionListener);
-				difficultyButtonPanel.add(easyButton.get(i));
+				difficultyButtonPanel.get(i).add(easyButton.get(i));
 
 				hardButton.get(i).addActionListener(actionListener);
-				difficultyButtonPanel.add(hardButton.get(i));
+				difficultyButtonPanel.get(i).add(hardButton.get(i));
 				//////////////////////////
 
 				addPlayer.get(i).addActionListener(actionListener);
@@ -274,10 +287,10 @@ public class SetupAGameUI {
 
 				playerNameField.get(i + 1).setText("Player " + String.valueOf(i + 2));
 
-				playerSettingsPanel.get(i + 1).remove(difficulty);
+				playerSettingsPanel.get(i + 1).remove(difficulty.get(i));
 
 				// Difficulty buttons
-				playerSettingsPanel.get(i + 1).remove(difficultyButtonPanel);
+				playerSettingsPanel.get(i + 1).remove(difficultyButtonPanel.get(i));
 				//////////////////////////
 
 				removePlayer.get(i).addActionListener(actionListener);
@@ -292,14 +305,35 @@ public class SetupAGameUI {
 
 			}
 
+			if (easyButton.contains(e.getSource())) {
+
+				int i = easyButton.indexOf(e.getSource());
+
+				difficultyType.set(i, DifficultyType.EASY);
+
+			}
+
+			if (hardButton.contains(e.getSource())) {
+
+				int i = hardButton.indexOf(e.getSource());
+
+				difficultyType.set(i, DifficultyType.HARD);
+
+			}
+
 			if (e.getSource() == startButton) {
 
-				int input = JOptionPane.showConfirmDialog(null, "Do you want to apply changes?", "Select an Option...",
+				int input = JOptionPane.showConfirmDialog(null, "Do you want to start the game", "Select an Option...",
 						JOptionPane.YES_NO_OPTION);
 				if (input == 0) {
-
-					playerNameField.forEach(i -> Settings.addNameBuffer(i.getText()));
-					Settings.applySettings();
+					SetupAGame.createAPlayer(playerNameField.get(0).getText(), PlayerType.HUMAN,
+							isColorblindEnabled.get(0), null);
+					for (int i = 0; i < 3; i++) {
+						SetupAGame.createAPlayer(playerNameField.get(i + 1).getText(), playerType.get(i),
+								isColorblindEnabled.get(i + 1), difficultyType.get(i));
+					}
+					GameState.setNewGame(true);
+					SetupAGame.startGame();
 					frame.dispose();
 				}
 
@@ -309,13 +343,12 @@ public class SetupAGameUI {
 				int input = JOptionPane.showConfirmDialog(null, "Do you want to revert changes?", "Select an Option...",
 						JOptionPane.YES_NO_OPTION);
 				if (input == 0) {
-					playerNameField.clear();
-					Settings.declineSettings();
+					GameState.loadGame();
+					SetupAGame.startGame();
 					frame.dispose();
 				}
 
 			}
-			;
 
 		}
 	};

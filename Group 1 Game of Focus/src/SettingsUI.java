@@ -34,8 +34,10 @@ public class SettingsUI {
 	// private Settings settings = new Settings();
 
 	public SettingsUI() {
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(0, 0, 800, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 
 		// For cross platform performance.
 		try {
@@ -61,6 +63,7 @@ public class SettingsUI {
 	private void CreatePlayerSettingsPanel() {
 
 		allplayerSettingsPanel = new JPanel();
+		allplayerSettingsPanel.setBackground(Color.WHITE);
 		GridLayout gl_allplayerSettingsPanel = new GridLayout(2, 2);
 		gl_allplayerSettingsPanel.setVgap(20);
 		gl_allplayerSettingsPanel.setHgap(20);
@@ -159,6 +162,13 @@ public class SettingsUI {
 		gbc_allplayerSettingsPanel.gridy = 3;
 		frame.getContentPane().add(allplayerSettingsPanel, gbc_allplayerSettingsPanel);
 		JPanel bottomPanel = new JPanel();
+		bottomPanel.setBackground(Color.WHITE);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
+		bottomPanel.setLayout(gridBagLayout);
 		GridBagConstraints gbc_bottomPanel = new GridBagConstraints();
 		gbc_bottomPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_bottomPanel.anchor = GridBagConstraints.NORTH;
@@ -166,27 +176,31 @@ public class SettingsUI {
 		gbc_bottomPanel.gridx = 1;
 		gbc_bottomPanel.gridy = 4;
 		frame.getContentPane().add(bottomPanel, gbc_bottomPanel);
-		bottomPanel.setLayout(new GridLayout(4, 1));
-
-		// FULSCREEN
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		bottomPanel.add(horizontalStrut);
 		fullscreenPanel = new JPanel();
-		fullscreenPanel.setLayout(new BorderLayout());
+		fullscreenPanel.setBackground(Color.WHITE);
+		fullscreenPanel.setLayout(new GridLayout(2, 1, 0, 0));
 		JLabel fullScreen = new JLabel("Toggle Fullscreen Mode:");
-		fullscreenPanel.add(fullScreen, BorderLayout.CENTER);
+		fullScreen.setBackground(Color.WHITE);
+		fullscreenPanel.add(fullScreen);
 		toggleFullscreen = new JToggleButton("OFF");
+		if (Settings.getFullscreenBuffer())
+			toggleFullscreen.setText("ON");
 		toggleFullscreen.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		toggleFullscreen.addActionListener(actionListener);
-		fullscreenPanel.add(toggleFullscreen, BorderLayout.SOUTH);
-		bottomPanel.add(fullscreenPanel);
-
-		Component horizontalStrut1 = Box.createHorizontalStrut(20);
-		bottomPanel.add(horizontalStrut1);
+		fullscreenPanel.add(toggleFullscreen);
+		GridBagConstraints gbc_fullscreenPanel = new GridBagConstraints();
+		gbc_fullscreenPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_fullscreenPanel.fill = GridBagConstraints.BOTH;
+		gbc_fullscreenPanel.gridx = 0;
+		gbc_fullscreenPanel.gridy = 1;
+		bottomPanel.add(fullscreenPanel, gbc_fullscreenPanel);
 
 		// CANCEL APPLY Buttons
 		cancelApplyPanel = new JPanel();
-		cancelApplyPanel.setLayout(new GridLayout(1, 2));
+		cancelApplyPanel.setBackground(Color.WHITE);
+		GridLayout gl_cancelApplyPanel = new GridLayout(1, 2);
+		gl_cancelApplyPanel.setHgap(20);
+		cancelApplyPanel.setLayout(gl_cancelApplyPanel);
 		cancel = new JButton("Cancel");
 		cancel.addActionListener(actionListener);
 		cancel.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -195,7 +209,12 @@ public class SettingsUI {
 		apply.addActionListener(actionListener);
 		apply.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cancelApplyPanel.add(apply);
-		bottomPanel.add(cancelApplyPanel);
+		GridBagConstraints gbc_cancelApplyPanel = new GridBagConstraints();
+		gbc_cancelApplyPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_cancelApplyPanel.fill = GridBagConstraints.BOTH;
+		gbc_cancelApplyPanel.gridx = 0;
+		gbc_cancelApplyPanel.gridy = 3;
+		bottomPanel.add(cancelApplyPanel, gbc_cancelApplyPanel);
 	}
 
 	// creates the heading
@@ -220,56 +239,19 @@ public class SettingsUI {
 
 				if (toggleColorblind.get(i).getText() == "Disabled") {
 					toggleColorblind.get(i).setText("Enabled");
-					Settings.addBuffer("p" + String.valueOf(i + 1) + ".toggleColorblind");
+					Settings.addBuffer(i + 1);
 				} else
 					toggleColorblind.get(i).setText("Disabled");
 			}
-//			if (e.getSource() == toggleColorblind.get(0)) {
-//				if (toggleColorblind.get(0).getText() == "Disabled") {
-//					toggleColorblind.get(0).setText("Enabled");
-//					Settings.addBuffer("p1.toggleColorblind");
-//				} else
-//					toggleColorblind.get(0).setText("Disabled");
-//			}
-//
-//			if (e.getSource() == toggleColorblind.get(1)) {
-//				if (toggleColorblind.get(1).getText() == "Disabled") {
-//					toggleColorblind.get(1).setText("Enabled");
-//					Settings.addBuffer("p2.toggleColorblind");
-//
-//				} else
-//					toggleColorblind.get(1).setText("Disabled");
-//			}
-//
-//			if (e.getSource() == toggleColorblind.get(2)) {
-//				if (toggleColorblind.get(2).getText() == "Disabled") {
-//					toggleColorblind.get(2).setText("Enabled");
-//					Settings.addBuffer("p3.toggleColorblind");
-//
-//				} else
-//					toggleColorblind.get(2).setText("Disabled");
-//			}
-//
-//			if (e.getSource() == toggleColorblind.get(3)) {
-//				if (toggleColorblind.get(3).getText() == "Disabled") {
-//					toggleColorblind.get(3).setText("Enabled");
-//					Settings.addBuffer("p4.toggleColorblind");
-//
-//				} else
-//					toggleColorblind.get(3).setText("Disabled");
-//			}
 
 			if (e.getSource() == toggleFullscreen) {
 				if (toggleFullscreen.getText() == "OFF") {
 					toggleFullscreen.setText("ON");
-					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-					frame.setUndecorated(true);
-					frame.setVisible(true);
+					Settings.setFullscreenBuffer(true);
+
 				} else {
 					toggleFullscreen.setText("OFF");
-					frame.setBounds(0, 0, 800, 800);
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setVisible(true);
+					Settings.setFullscreenBuffer(false);
 				}
 
 			}

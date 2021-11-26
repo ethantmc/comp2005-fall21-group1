@@ -22,6 +22,14 @@ public class Token extends JLabel {
 	ImageIcon p2CBIcon = new ImageIcon(getClass().getResource("/Player 2 - CBToken.png"));
 	ImageIcon p3CBIcon = new ImageIcon(getClass().getResource("/Player 3 - CBToken.png"));
 	ImageIcon p4CBIcon = new ImageIcon(getClass().getResource("/Player 4 - CBToken.png"));
+	ImageIcon p1CBClickedIcon = new ImageIcon(getClass().getResource("/Player 1 - CBClickedToken.png"));
+	ImageIcon p2CBClickedIcon = new ImageIcon(getClass().getResource("/Player 2 - CBClickedToken.png"));
+	ImageIcon p3CBClickedIcon = new ImageIcon(getClass().getResource("/Player 3 - CBClickedToken.png"));
+	ImageIcon p4CBClickedIcon = new ImageIcon(getClass().getResource("/Player 4 - CBClickedToken.png"));
+	ImageIcon p1ClickedIcon = new ImageIcon(getClass().getResource("/Player 1 - ClickedToken.png"));
+	ImageIcon p2ClickedIcon = new ImageIcon(getClass().getResource("/Player 2 - ClickedToken.png"));
+	ImageIcon p3ClickedIcon = new ImageIcon(getClass().getResource("/Player 3 - ClickedToken.png"));
+	ImageIcon p4ClickedIcon = new ImageIcon(getClass().getResource("/Player 4 - ClickedToken.png"));
 	ImageIcon p1VMCBIcon = new ImageIcon(getClass().getResource("/Player 1 - VMCBToken.png"));
 	ImageIcon p2VMCBIcon = new ImageIcon(getClass().getResource("/Player 2 - VMCBToken.png"));
 	ImageIcon p3VMCBIcon = new ImageIcon(getClass().getResource("/Player 3 - VMCBToken.png"));
@@ -74,6 +82,30 @@ public class Token extends JLabel {
 //			else if (owner == null) {
 //			this.setIcon(emptyStackVMIcon);
 //		}
+	}
+	
+	public void setClickedTokenIcon() {
+		if (Turn.getCurrentPlayer().getColorblindSetting()) {
+			if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1CBClickedIcon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2CBClickedIcon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3CBClickedIcon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4CBClickedIcon);
+			}
+		} else {
+			if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1ClickedIcon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2ClickedIcon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3ClickedIcon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4ClickedIcon);
+			}
+		}
 	}
 
 	public void setTokenIcon() {
