@@ -35,7 +35,7 @@ class FactorsTester {
 	{	
 		// TEST 1: should succeed as 2 is a valid value.
 		ArrayList<Integer> expected = new ArrayList<Integer>();
-		expected.add(2);
+		expected.add(1);
 		assertEquals(expected, FactorsUtility.getFactors(2));
 	}
 
