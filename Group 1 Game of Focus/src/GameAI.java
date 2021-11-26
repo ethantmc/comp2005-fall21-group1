@@ -3,7 +3,7 @@ public class GameAI {
 	Stack spaceFrom;
 	Stack spaceTo;
 
-	public int checkMove(Stack stackFrom, Stack stackTo, CPUPlayer CPU) { //returns zero if invalid, otherwise returns minimum token count to move 
+	public int checkMove(Stack stackFrom, Stack stackTo, Player CPU) { //returns zero if invalid, otherwise returns minimum token count to move 
 		if((stackFrom.getStackOwner() == CPU) && (stackFrom != stackTo)) {
 			int xDifference = Math.abs(stackFrom.getXcoord()-stackTo.getXcoord());
 			int yDifference = Math.abs(stackFrom.getYcoord()-stackTo.getYcoord());
@@ -20,7 +20,7 @@ public class GameAI {
 			}
 		}
 	}
-	public void cpuDoMove(CPUPlayer CPU) {
+	public void cpuDoMove(Player CPU) {
 		if (CPU.getDifficulty() == DifficultyType.EASY) {
 			if (CPU.getReserveCount() > 0) { //As easy AI immediately play a reserve piece if you somehow gained one.
 				int validMove = 0; //NOT redundant by getValidSpace(), a move may be pointless or out of range.

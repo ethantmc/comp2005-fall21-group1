@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class Player {
@@ -13,7 +12,7 @@ public class Player {
 	private Color color;
 	private int capturedCount = 0;
 	private int domination = 0;
-	private int piecesLost= 0; //IMO, rename to tokensLost
+	private int piecesLost = 0; //IMO, rename to tokensLost
 
 	public Player(String name, PlayerType type, Boolean colorblindSetting, DifficultyType difficulty) {
 		super();
@@ -26,40 +25,34 @@ public class Player {
 	public int getCapturedCount() {
 		return capturedCount;
 	}
-	public int getDomination() {
-		return domination;
-	}
-	public void setDomination(int domination) {
-		this.domination = domination;
-	}
 	public Color getColor() {
 		return color;
 	}
 	public Boolean getColorblindSetting() {
 		return isColorblindEnabled;
 	}
+	public DifficultyType getDifficulty() {
+		return difficulty;
+	}
+	public int getDomination() {
+		return domination;
+	}
 	public String getName() {
 		return name;
 	}
-	public int getTokensLeft() {
-		return 13-piecesLost;
-	}
-
 	public int getReserveCount() {
 		return reservedTokens.size();
 	}
+
 	public Token getReserveToken()
 	{
 		return reservedTokens.pop();
 	}
+	public int getTokensLeft() {
+		return 13-piecesLost;
+	}
 	public PlayerType getType() {
 		return type;
-	}
-	public DifficultyType getDifficulty() {
-		return difficulty;
-	}
-	public void setDifficulty(DifficultyType difficulty) {
-		this.difficulty = difficulty;
 	}
 	public void incrementCapturedCount() {
 		this.capturedCount++; //+= works in java AFAIK.
@@ -78,6 +71,12 @@ public class Player {
 	}
 	public void setColorblindSetting(Boolean colorblindSetting) {
 		this.isColorblindEnabled = colorblindSetting;
+	}
+	public void setDifficulty(DifficultyType difficulty) {
+		this.difficulty = difficulty;
+	}
+	public void setDomination(int domination) {
+		this.domination = domination;
 	}
 	public void setName(String name) {
 		this.name = name;
