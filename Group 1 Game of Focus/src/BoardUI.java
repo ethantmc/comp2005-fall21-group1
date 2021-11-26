@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class BoardUI extends JPanel {
 
@@ -18,6 +20,7 @@ public class BoardUI extends JPanel {
 	private Stack[][] stacks;
 	private int x, y, num;
 	private static Stack clicked = null, moveFrom = null, moveTo = null;
+	private JPanel boardUIInstance = this;
 
 	/**
 	 * Create the application.
@@ -36,10 +39,9 @@ public class BoardUI extends JPanel {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		// this.setBounds(100, 100, 900, 600);
-		// this.setLayout(new GridLayout(8, 8, 5, 5));
 
-		Board.generateStacksAndTokens();
+		if (GameState.isNewGame())
+			Board.generateStacksAndTokens();
 		Board.updateDominationPercentageForAllPlayers();
 		stacks = Board.getStacks();
 		// add stacks to the board
@@ -94,9 +96,12 @@ public class BoardUI extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
+			Board.updateStacksDisplay();
+			SwingUtilities.updateComponentTreeUI(boardUIInstance);
 			clicked = (Stack) e.getSource();
 			if (moveFrom == null) // does not execute if the player is about to make a move
 			{
+				Board.highlightClicked(clicked);
 				// create popupMenu
 				JPopupMenu popupMenu = new JPopupMenu();
 				JMenuItem playfromReserves = new JMenuItem("Play from reserves");
@@ -110,23 +115,23 @@ public class BoardUI extends JPanel {
 					playfromReserves.hide();
 				}
 				popupMenu.add(playfromReserves);
+
+				ArrayList<JMenuItem> move = new ArrayList<JMenuItem>();
 				// do not add more menu items if the stack is empty
 				if (!(clicked.getStackOwner() == null)) {
-					JMenuItem mntmNewMenuItem_2 = new JMenuItem("1");
-					mntmNewMenuItem_2.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							num = 1;
-							Board.highlightPossibleMoves(clicked.getXcoord(), clicked.getYcoord(), 1);
-							moveFrom = clicked;
-						}
-					});
-					popupMenu.add(mntmNewMenuItem_2);
+					for (int i = 0; i < clicked.getStackSize(); i++) {
+						move.add(new JMenuItem(String.valueOf(i + 1)));
+						move.get(i).setHorizontalTextPosition(SwingConstants.CENTER);
+						move.get(i).addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								num = move.indexOf(e.getSource()) + 1;
+								Board.highlightPossibleMoves(clicked.getXcoord(), clicked.getYcoord(), num);
+								moveFrom = clicked;
+							}
+						});
+						popupMenu.add(move.get(i));
 
-					JMenuItem mntmNewMenuItem_3 = new JMenuItem("New menu item");
-					popupMenu.add(mntmNewMenuItem_3);
-
-					JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
-					popupMenu.add(mntmNewMenuItem);
+					}
 				}
 				// show popupMenu
 				popupMenu.show(e.getComponent(), e.getX(), e.getY());
