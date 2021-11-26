@@ -138,7 +138,6 @@ public class Board {
 		}
 
 	}
-	//TODO - IterateOverBoard() code for duplication in the above. After discussion, code duplication deemed preferable to IterateOverBoard() being a real method.
 
 	public static void iiterateOverBoard() {
 		// TODO Method Stub

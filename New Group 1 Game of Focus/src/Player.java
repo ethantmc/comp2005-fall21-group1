@@ -1,9 +1,7 @@
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class Player {
-	//MAJOR NOTE: these attributes being private is ALMOST DEFINITELY a problem. AFAIK, private attributes play poorly with subclasses. Not 100% though.
 	private String name; //Not set as default player name slightly changes for each. Static to appease Turn class.
 	private PlayerType type;  //This is an Enumerated Type!
 	private DifficultyType difficulty;
@@ -26,40 +24,34 @@ public class Player {
 	public int getCapturedCount() {
 		return capturedCount;
 	}
-	public int getDomination() {
-		return domination;
-	}
-	public void setDomination(int domination) {
-		this.domination = domination;
-	}
 	public Color getColor() {
 		return color;
 	}
 	public Boolean getColorblindSetting() {
 		return isColorblindEnabled;
 	}
+	public DifficultyType getDifficulty() {
+		return difficulty;
+	}
+	public int getDomination() {
+		return domination;
+	}
 	public String getName() {
 		return name;
 	}
-	public int getTokensLeft() {
-		return 13-piecesLost;
-	}
-
 	public int getReserveCount() {
 		return reservedTokens.size();
 	}
+
 	public Token getReserveToken()
 	{
 		return reservedTokens.pop();
 	}
+	public int getTokensLeft() {
+		return 13-piecesLost;
+	}
 	public PlayerType getType() {
 		return type;
-	}
-	public DifficultyType getDifficulty() {
-		return difficulty;
-	}
-	public void setDifficulty(DifficultyType difficulty) {
-		this.difficulty = difficulty;
 	}
 	public void incrementCapturedCount() {
 		this.capturedCount++; //+= works in java AFAIK.
@@ -78,6 +70,12 @@ public class Player {
 	}
 	public void setColorblindSetting(Boolean colorblindSetting) {
 		this.isColorblindEnabled = colorblindSetting;
+	}
+	public void setDifficulty(DifficultyType difficulty) {
+		this.difficulty = difficulty;
+	}
+	public void setDomination(int domination) {
+		this.domination = domination;
 	}
 	public void setName(String name) {
 		this.name = name;
