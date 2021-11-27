@@ -31,6 +31,7 @@ public class GameUI extends JFrame {
 	private ArrayList<JLabel> playerReservesLabel = new ArrayList<JLabel>();
 	private ArrayList<JLabel> playerTokensLeftLabel = new ArrayList<JLabel>();
 	private ArrayList<JLabel> playerCapturedLabel = new ArrayList<JLabel>();
+	private static BoardUI boardUI;
 	ImageIcon infoIcon = new ImageIcon(getClass().getResource("/InfoIcon.png"));
 	JButton newGameButton, settingsButton, saveButton, loadButton;
 	// private ArrayList<FlowLayout> panelFlowLayout = new ArrayList<FlowLayout>();
@@ -45,8 +46,8 @@ public class GameUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		BoardUI board = new BoardUI();
-		contentPane.add(board, BorderLayout.CENTER);
+		boardUI = new BoardUI();
+		contentPane.add(boardUI, BorderLayout.CENTER);
 
 		JPanel eastPanel = new JPanel();
 		eastPanel.setBackground(Color.WHITE);
@@ -214,6 +215,10 @@ public class GameUI extends JFrame {
 
 	}
 
+	public void initializeBoardUI() {
+		boardUI.initialize();
+	}
+
 	// public void
 	public static void setWinner(Player player) {
 		whosTurn.setText(player.getName() + "'s the Winner!");
@@ -229,14 +234,21 @@ public class GameUI extends JFrame {
 				if (input == 0) {
 
 					GameState.setNewGame(true);
-					SetupAGame.startGame();
 					dispose();
+					SetupAGame.startGame();
 				}
 
 			}
 			if (e.getSource() == settingsButton) {
 				SettingsUI settings = new SettingsUI();
-				// dispose();
+			}
+			if (e.getSource() == saveButton) {
+				GameState.saveGame();
+			}
+			if (e.getSource() == loadButton) {
+				GameState.loadGame();
+				dispose();
+				SetupAGame.startGame();
 			}
 		}
 	};
