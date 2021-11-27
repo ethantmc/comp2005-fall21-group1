@@ -1,11 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JPanel;
 
-public class Board {
+public class Board implements Serializable{
 
 	private static ArrayList<JPanel> notPartofBoard = new ArrayList<JPanel>();
 	private static Player player;
@@ -96,12 +97,19 @@ public class Board {
 	public static Stack getValidSpace() {
 		//Method for selecting and returning a valid space's stack (which may be empty)
 		//only ensures a random space actually exists, NOT that it's in range.
-		int x;
-		int y;
-		x = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
-		y = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
+		int x=0;
+		int y=0;
+		// Conditions for invalid token positions
+		cond1 = ((x == 0) && ((y == 0) || (y == 1) || (y == 6) || (y == 7)));
+		cond2 = ((x == 7) && ((y == 0) || (y == 1) || (y == 6) || (y == 7)));
+		cond3 = ((y == 7) && ((x == 1) || (x == 6)));
+		cond4 = ((y == 0) && ((x == 1) || (x == 6)));
+		while(!(cond1 || cond2 || cond3 || cond4))
+		{
+			x = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
+			y = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
+		}
 		//Use these numbers to select a space
-		//TODO: Galib, add conditionals for the invalid spaces here, please!
 		return stacks[x][y]; 
 	}
 
