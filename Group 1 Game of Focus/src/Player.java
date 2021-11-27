@@ -1,7 +1,8 @@
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Stack;
 
-public class Player {
+public class Player implements Serializable{
 	//MAJOR NOTE: these attributes being private is ALMOST DEFINITELY a problem. AFAIK, private attributes play poorly with subclasses. Not 100% though.
 	private String name; //Not set as default player name slightly changes for each. Static to appease Turn class.
 	private PlayerType type;  //This is an Enumerated Type!
@@ -91,6 +92,12 @@ public class Player {
 	}
 	public void setType(PlayerType type) {
 		this.type = type;
+	}
+	public void resetStats() {
+		this.piecesLost = 0;
+		this.capturedCount = 0;
+		this.domination = 0;
+		this.reservedTokens.clear();
 	}
 	public void toggleColorblindSetting() 
 	{
