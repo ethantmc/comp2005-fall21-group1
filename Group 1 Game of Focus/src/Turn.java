@@ -46,7 +46,9 @@ public class Turn {
 	public static Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-
+	public static void setCurrentPlayer(Player player) {
+		currentPlayer=player;
+	}
 	public static void initiatePlayerTurn() { // Only to be called the very first turn for the game.
 		int playerTurn;
 		playerTurn = ThreadLocalRandom.current().nextInt(0, 4); // Selects from [0,4)
@@ -66,6 +68,7 @@ public class Turn {
 
 		Board.updateDominationPercentageForAllPlayers();
 		Board.updateStacksDisplay();
+		SetupAGame.getGameUIInstance().updateStats();
 		SwingUtilities.updateComponentTreeUI(SetupAGame.getGameUIInstance());
 	}
 }
