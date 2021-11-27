@@ -13,6 +13,8 @@ public class SetupAGame {
 
 
 	public static GameUI getGameUIInstance() {
+		if(window==null)
+			window = new GameUI();
 		return window;
 	}
 	
@@ -27,7 +29,15 @@ public class SetupAGame {
 		{
 			players.get(i).setColor(colors[i]);
 		}
-		window = new GameUI();
+		if(window==null || GameState.isNewGame())
+		{
+			window = new GameUI();
+		}
+//		if(GameState.isNewGame())
+//		{
+//			window = new GameUI();
+//			//players.forEach(i -> i.resetStats());
+//		}
 		window.setVisible(true);
 	}
 
