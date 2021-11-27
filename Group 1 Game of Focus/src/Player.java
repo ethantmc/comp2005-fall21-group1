@@ -18,7 +18,12 @@ public class Player {
 		super();
 		this.name = name;
 		this.type = type;
-		this.difficulty = difficulty;
+		if(this.type == PlayerType.HUMAN) {
+			this.difficulty = DifficultyType.HUMAN;
+		}
+		else {
+			this.difficulty = difficulty;
+		}
 		this.isColorblindEnabled = colorblindSetting;
 		reservedTokens.clear();
 	}

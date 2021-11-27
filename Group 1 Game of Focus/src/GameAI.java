@@ -1,9 +1,9 @@
 import java.util.concurrent.ThreadLocalRandom;
 public class GameAI {
-	Stack spaceFrom;
-	Stack spaceTo;
+	static Stack spaceFrom;
+	static Stack spaceTo;
 
-	public int checkMove(Stack stackFrom, Stack stackTo, Player CPU) { //returns zero if invalid, otherwise returns minimum token count to move 
+	public static int checkMove(Stack stackFrom, Stack stackTo, Player CPU) { //returns zero if invalid, otherwise returns minimum token count to move 
 		int to_return = 0;
 		if ((stackFrom.getStackOwner() == CPU) && (stackFrom != stackTo)) {
 			int xDifference = Math.abs(stackFrom.getXcoord() - stackTo.getXcoord());
@@ -21,7 +21,8 @@ public class GameAI {
 		return to_return;
 	}
 
-	public void cpuDoMove(Player CPU) {
+	public static void cpuDoMove(Player CPU) {
+		System.out.println("cpuDoMove reached! CPU Difficulty: "+CPU.getDifficulty());
 		if (CPU.getDifficulty() == DifficultyType.EASY) {
 			if (CPU.getReserveCount() > 0) { //As easy AI immediately play a reserve piece if you somehow gained one.
 				int validMove = 0; //NOT redundant by getValidSpace(), a move may be pointless or out of range.

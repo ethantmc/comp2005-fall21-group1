@@ -1,4 +1,4 @@
 
 public enum DifficultyType {
-EASY, HARD
+	EASY, HARD, HUMAN
 }

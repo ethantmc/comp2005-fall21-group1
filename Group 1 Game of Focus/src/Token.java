@@ -6,9 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class Token extends JLabel {
-	private Player owner = null; // TODO: Verify as desired implementation of Owner. -This should be ideal for
-									// telling a Player they've lost or gained a Token, which Stack is responsible
-									// for.
+	private Player owner = null; // This should be ideal for // telling a Player they've lost or gained a Token, which Stack is responsible for.
 	private boolean isStacked = false;
 	ImageIcon p1Icon = new ImageIcon(getClass().getResource("/Player 1 - Token.png"));
 	ImageIcon p2Icon = new ImageIcon(getClass().getResource("/Player 2 - Token.png"));
@@ -46,7 +44,7 @@ public class Token extends JLabel {
 	ImageIcon emptyStackVMIcon = new ImageIcon(getClass().getResource("/EmptyStackValidMove.png"));
 
 	public Token(Player owner) { // TODO: Verify constructor should pass in X and Y
-									// coords.
+		// coords.
 		super();
 		this.owner = owner;
 		this.setHorizontalAlignment(SwingConstants.CENTER);
@@ -57,33 +55,14 @@ public class Token extends JLabel {
 
 	}
 
-	public void setValidMoveTokenIcon() {
-		if (Turn.getCurrentPlayer().getColorblindSetting()) {
-			if (owner == SetupAGame.getPlayers().get(0)) {
-				this.setIcon(p1VMCBIcon);
-			} else if (owner == SetupAGame.getPlayers().get(1)) {
-				this.setIcon(p2VMCBIcon);
-			} else if (owner == SetupAGame.getPlayers().get(2)) {
-				this.setIcon(p3VMCBIcon);
-			} else if (owner == SetupAGame.getPlayers().get(3)) {
-				this.setIcon(p4VMCBIcon);
-			}
-		} else {
-			if (owner == SetupAGame.getPlayers().get(0)) {
-				this.setIcon(p1VMIcon);
-			} else if (owner == SetupAGame.getPlayers().get(1)) {
-				this.setIcon(p2VMIcon);
-			} else if (owner == SetupAGame.getPlayers().get(2)) {
-				this.setIcon(p3VMIcon);
-			} else if (owner == SetupAGame.getPlayers().get(3)) {
-				this.setIcon(p4VMIcon);
-			}
-		}
-//			else if (owner == null) {
-//			this.setIcon(emptyStackVMIcon);
-//		}
+	public Player getOwner() {
+		return owner;
 	}
-	
+
+	public boolean isStacked() {
+		return isStacked;
+	}
+
 	public void setClickedTokenIcon() {
 		if (Turn.getCurrentPlayer().getColorblindSetting()) {
 			if (owner == SetupAGame.getPlayers().get(0)) {
@@ -95,17 +74,24 @@ public class Token extends JLabel {
 			} else if (owner == SetupAGame.getPlayers().get(3)) {
 				this.setIcon(p4CBClickedIcon);
 			}
-		} else {
-			if (owner == SetupAGame.getPlayers().get(0)) {
-				this.setIcon(p1ClickedIcon);
-			} else if (owner == SetupAGame.getPlayers().get(1)) {
-				this.setIcon(p2ClickedIcon);
-			} else if (owner == SetupAGame.getPlayers().get(2)) {
-				this.setIcon(p3ClickedIcon);
-			} else if (owner == SetupAGame.getPlayers().get(3)) {
-				this.setIcon(p4ClickedIcon);
-			}
+		} else if (owner == SetupAGame.getPlayers().get(0)) {
+			this.setIcon(p1ClickedIcon);
+		} else if (owner == SetupAGame.getPlayers().get(1)) {
+			this.setIcon(p2ClickedIcon);
+		} else if (owner == SetupAGame.getPlayers().get(2)) {
+			this.setIcon(p3ClickedIcon);
+		} else if (owner == SetupAGame.getPlayers().get(3)) {
+			this.setIcon(p4ClickedIcon);
 		}
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
+		setTokenIcon();
+	}
+
+	public void setStacked(boolean isStacked) {
+		this.isStacked = isStacked;
 	}
 
 	public void setTokenIcon() {
@@ -135,50 +121,54 @@ public class Token extends JLabel {
 					this.setIcon(emptyStackIcon);
 				}
 			}
+		} else if (isStacked) {
+			if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1StackIcon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2StackIcon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3StackIcon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4StackIcon);
+			} else if (owner == null) {
+				this.setIcon(emptyStackIcon);
+			}
 		} else {
-			if (isStacked) {
-				if (owner == SetupAGame.getPlayers().get(0)) {
-					this.setIcon(p1StackIcon);
-				} else if (owner == SetupAGame.getPlayers().get(1)) {
-					this.setIcon(p2StackIcon);
-				} else if (owner == SetupAGame.getPlayers().get(2)) {
-					this.setIcon(p3StackIcon);
-				} else if (owner == SetupAGame.getPlayers().get(3)) {
-					this.setIcon(p4StackIcon);
-				} else if (owner == null) {
-					this.setIcon(emptyStackIcon);
-				}
-			} else {
-				if (owner == SetupAGame.getPlayers().get(0)) {
-					this.setIcon(p1Icon);
-				} else if (owner == SetupAGame.getPlayers().get(1)) {
-					this.setIcon(p2Icon);
-				} else if (owner == SetupAGame.getPlayers().get(2)) {
-					this.setIcon(p3Icon);
-				} else if (owner == SetupAGame.getPlayers().get(3)) {
-					this.setIcon(p4Icon);
-				} else if (owner == null) {
-					this.setIcon(emptyStackIcon);
-				}
+			if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1Icon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2Icon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3Icon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4Icon);
+			} else if (owner == null) {
+				this.setIcon(emptyStackIcon);
 			}
 		}
 
 	}
 
-	public Player getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Player owner) {
-		this.owner = owner;
-		setTokenIcon();
-	}
-
-	public boolean isStacked() {
-		return isStacked;
-	}
-
-	public void setStacked(boolean isStacked) {
-		this.isStacked = isStacked;
+	public void setValidMoveTokenIcon() {
+		if (Turn.getCurrentPlayer().getColorblindSetting()) {
+			if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1VMCBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2VMCBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3VMCBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4VMCBIcon);
+			}
+		}
+		else if (owner == SetupAGame.getPlayers().get(0)) {
+			this.setIcon(p1VMIcon);
+		} else if (owner == SetupAGame.getPlayers().get(1)) {
+			this.setIcon(p2VMIcon);
+		} else if (owner == SetupAGame.getPlayers().get(2)) {
+			this.setIcon(p3VMIcon);
+		} else if (owner == SetupAGame.getPlayers().get(3)) {
+			this.setIcon(p4VMIcon);
+		}
 	}
 }
