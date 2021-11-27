@@ -75,6 +75,44 @@ public class Stack extends JPanel {
 
 	}
 
+	public int containsTokenofOwner() {
+		int i=0;
+		while((stackContents.get(i) != null) && (stackContents.get(i) != stackContents.get(stackContents.size() - 1) )) { //Search until list is at the top token, or given max, but do not search a null stack.
+			if(stackContents.get(i).getOwner()==this.getStackOwner()) { //if a tokens owner matches the owner of this stack
+				int returnme = (this.getStackSize()-i)-1; //Invert the number. Examples below:
+				return (returnme); //break at the first(lowest) find. Maximizes captures.	//	 0, 1, 2, [token], 4.
+				//																			i = 3
+				//																	returnme gives: 5-3-1 = 1.
+				//
+				//																	[token], 1, 2, 3, 4
+				//																			i = 0
+				//																	returnme gives: 4.  //pass into MakeAMove, this should move the correct number of tokens, leaving behind an owned stack.
+			}
+		}
+		//TODO: Time Permitting: further sophistication by not just return the first result, but all results.
+		//Currently, if you get here, there must only be one owner in this stack, so return (-1) to indicate anything left behind won't be owned.
+		return -1;
+	}
+
+	public int containsTokenofOwnerInRange(int max) {
+		int i=0;
+		while((stackContents.get(i) != null) && (stackContents.get(i) != stackContents.get(stackContents.size() - 1) ) && ( i !=  max )) { //Search until list is at the top token, or given max, but do not search a null stack.
+			if(stackContents.get(i).getOwner()==this.getStackOwner()) { //if a tokens owner matches the owner of this stack
+				int returnme = (this.getStackSize()-i)-1; //Invert the number. Examples below:
+				return (returnme); //break at the first(lowest) find. Maximizes captures.	//	 0, 1, 2, [token], 4.
+				//																			i = 3
+				//																	returnme gives: 5-3-1 = 1.
+				//
+				//																	[token], 1, 2, 3, 4
+				//																			i = 0
+				//																	returnme gives: 4.  //pass into MakeAMove, this should move the correct number of tokens, leaving behind an owned stack.
+			}
+		}
+		//TODO: Time Permitting: further sophistication by not just return the first result, but all results.
+		//Currently, if you get here, there must only be one owner in this stack, so return (-1) to indicate anything left behind won't be owned.
+		return -1;
+	}
+
 	public ArrayList<Token> getStackContents() {
 		return stackContents;
 	}
@@ -89,15 +127,12 @@ public class Stack extends JPanel {
 	public int getStackSize() {
 		return stackContents.size();
 	}
-
 	public int getXcoord() {
 		return xcoord;
 	}
-
 	public int getYcoord() {
 		return ycoord;
 	}
-
 	public ArrayList<Token> moveTokens(int numberofTokens) {
 		ArrayList<Token> movingList;
 		movingList = new ArrayList<Token>(stackContents.subList(numberofTokens - 1, (stackContents.size() - 1)));
