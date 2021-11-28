@@ -135,9 +135,18 @@ public class Stack extends JPanel {
 	}
 	public ArrayList<Token> moveTokens(int numberofTokens) {
 		ArrayList<Token> movingList;
-		movingList = new ArrayList<Token>(stackContents.subList(numberofTokens - 1, (stackContents.size() - 1)));
 		ArrayList<Token> remainingList;
-		remainingList = new ArrayList<Token>(stackContents.subList(0, numberofTokens - 1)); // remainingList will be the
+		if ((numberofTokens == 1) && (this.getStackSize() == 1)) {
+			System.out.println("Special condition hit in moveTokens, single move of a size-1 stack.");
+			movingList = stackContents;
+			remainingList = stackContents;
+			remainingList.remove(0);
+			return movingList;
+		}
+		else {
+			movingList = new ArrayList<Token>(stackContents.subList(numberofTokens - 1, (stackContents.size() - 1)));
+			remainingList = new ArrayList<Token>(stackContents.subList(0, numberofTokens - 1)); // remainingList will be the
+		}
 		// new
 		// stack in the old place.
 		// Size-1 since indexed at

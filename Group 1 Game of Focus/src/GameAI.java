@@ -4,6 +4,7 @@ public class GameAI {
 
 	public static int checkMove(Stack stackFrom, Stack stackTo, Player CPU, int offset) { //returns zero if invalid, otherwise returns minimum token count to move 
 		int to_return = 0;
+		System.out.println("Checking move from "+stackFrom.getXcoord()+","+stackFrom.getYcoord()+" to "+stackTo.getXcoord()+stackTo.getYcoord());
 		if ((stackFrom.getStackOwner() == CPU) && (stackFrom != stackTo)) {
 			int xDifference = Math.abs(stackFrom.getXcoord() - stackTo.getXcoord());
 			int yDifference = Math.abs(stackFrom.getYcoord() - stackTo.getYcoord());
@@ -19,11 +20,12 @@ public class GameAI {
 				to_return = 0;
 			}
 		}
+		System.out.println("Checking completed, the value was:"+to_return);
 		return to_return;
 	}
 
 	public static void cpuDoMove(Player CPU) {
-		System.out.println("cpuDoMove reached! CPU Difficulty: "+CPU.getDifficulty());
+		System.out.println("cpuDoMove reached! CPU Difficulty: "+CPU.getDifficulty()+"cpu is PlayerType: "+CPU.getType());
 		if (CPU.getDifficulty() == DifficultyType.EASY) {
 			if (CPU.getReserveCount() > 0) { //As easy AI immediately play a reserve piece if you somehow gained one.
 				int validMove = 0; //NOT redundant by getValidSpace(), a move may be pointless or out of range.
@@ -73,7 +75,7 @@ public class GameAI {
 				}
 				int i;
 				boolean jobDone = false;
-				for(i=0; i<30; i++) { //arbitrary number of non-exhaustive attempts, to prevent a neverending stall.
+				for(i=0; i<5; i++) { //arbitrary number of non-exhaustive attempts, to prevent a neverending stall.
 					System.out.println(i+"th attempt to make a smarter move!");
 					spaceTo = Board.getValidSpace();
 					int validMove = 0;
