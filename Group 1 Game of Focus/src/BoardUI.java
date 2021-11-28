@@ -129,7 +129,7 @@ public class BoardUI extends JPanel {
 
 				ArrayList<JMenuItem> move = new ArrayList<JMenuItem>();
 				// do not add more menu items if the stack is empty
-				if (!(clicked.getStackOwner() == null)) {
+				if (!(clicked.getStackOwner() == null) && clicked.getStackOwner()==Turn.getCurrentPlayer()) {
 					for (int i = 0; i < clicked.getStackSize(); i++) {
 						move.add(new JMenuItem(String.valueOf(i + 1)));
 						move.get(i).setHorizontalTextPosition(SwingConstants.CENTER);
