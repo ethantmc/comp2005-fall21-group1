@@ -104,7 +104,7 @@ public class Board implements Serializable{
 		cond2 = ((x == 7) && ((y == 0) || (y == 1) || (y == 6) || (y == 7)));
 		cond3 = ((y == 7) && ((x == 1) || (x == 6)));
 		cond4 = ((y == 0) && ((x == 1) || (x == 6)));
-		while(!(cond1 || cond2 || cond3 || cond4))
+		while(cond1 || cond2 || cond3 || cond4)
 		{
 			x = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
 			y = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
