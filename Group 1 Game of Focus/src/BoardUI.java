@@ -28,8 +28,6 @@ public class BoardUI extends JPanel {
 	public BoardUI() {
 		setBackground(Color.WHITE);
 
-		Turn.initiatePlayerTurn();
-
 		setLayout(new GridLayout(8, 8, 20, 15));
 
 		initialize();
@@ -38,10 +36,20 @@ public class BoardUI extends JPanel {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 
 		if (GameState.isNewGame())
+		{
+			Turn.initiatePlayerTurn();
 			Board.generateStacksAndTokens();
+		}
+		
+		else
+		{
+			this.removeAll();
+			this.revalidate();
+			this.repaint();
+		}
 		Board.updateDominationPercentageForAllPlayers();
 		stacks = Board.getStacks();
 		// add stacks to the board
@@ -67,24 +75,27 @@ public class BoardUI extends JPanel {
 
 			}
 		}
+		if (GameState.isNewGame())
+		{
+			// Adding reserve tokens for test purpose
+			int k = 0;
+			for (int p = 0; p < 4; p++) {
+				for (int q = 0; q < 8; q++) {
+					testReserves.add(new Token(SetupAGame.getPlayers().get(p)));
+					SetupAGame.getPlayers().get(p).reserveAToken(testReserves.get(k));
+					k++;
+				}
 
-		// Adding reserve tokens for test purpose
-		int k = 0;
-		for (int p = 0; p < 4; p++) {
-			for (int q = 0; q < 8; q++) {
-				testReserves.add(new Token(SetupAGame.getPlayers().get(p)));
-				SetupAGame.getPlayers().get(p).reserveAToken(testReserves.get(k));
-				k++;
 			}
-
+			// removing stack tokens for test purpose
+			stacks[4][5].removeToken();
+			stacks[4][2].removeToken();
+			stacks[4][3].removeToken();
+			stacks[2][5].removeToken();
+			stacks[2][3].removeToken();
+			Board.updateStacksDisplay();
 		}
-		// removing stack tokens for test purpose
-		stacks[4][5].removeToken();
-		stacks[4][2].removeToken();
-		stacks[4][3].removeToken();
-		stacks[2][5].removeToken();
-		stacks[2][3].removeToken();
-		Board.updateStacksDisplay();
+
 	}
 
 	public static Stack getClicked() {
