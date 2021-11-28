@@ -8,11 +8,11 @@ public class GameAI {
 		if ((stackFrom.getStackOwner() == CPU) && (stackFrom != stackTo)) {
 			int xDifference = Math.abs(stackFrom.getXcoord() - stackTo.getXcoord());
 			int yDifference = Math.abs(stackFrom.getYcoord() - stackTo.getYcoord());
-			if ((xDifference <= (stackFrom.getStackSize()-offset)) && (stackFrom.getYcoord() == stackTo.getYcoord())) {
+			if ((xDifference <= ((stackFrom.getStackSize())-offset)) && (stackFrom.getYcoord() == stackTo.getYcoord())) {
 				//Above means - "If the two stacks lie in the same row, and the original stack could reach"
 				to_return = xDifference;
 			} 
-			else if ((yDifference <= (stackFrom.getStackSize()-offset)) && (stackFrom.getXcoord() == stackTo.getXcoord())) {
+			else if ((yDifference <= ((stackFrom.getStackSize())-offset)) && (stackFrom.getXcoord() == stackTo.getXcoord())) {
 				//Above means - "If the two stacks lie in the same column, and the original stack could reach"
 				to_return =  yDifference;
 			} 
@@ -25,26 +25,32 @@ public class GameAI {
 	}
 
 	public static void cpuDoMove(Player CPU) {
-		System.out.println("cpuDoMove reached! CPU Difficulty: "+CPU.getDifficulty()+"cpu is PlayerType: "+CPU.getType());
+		System.out.println("cpuDoMove reached! CPU Difficulty: "+CPU.getDifficulty()+" Cpu is PlayerType: "+CPU.getType());
 		if (CPU.getDifficulty() == DifficultyType.EASY) {
 			if (CPU.getReserveCount() > 0) { //As easy AI immediately play a reserve piece if you somehow gained one.
 				int validMove = 0; //NOT redundant by getValidSpace(), a move may be pointless or out of range.
 				while (validMove == 0) {
+					System.out.println("Calling on getValidSpace() for a reserve move location...");
 					spaceTo = Board.getValidSpace();
 					validMove = 1; //Any space is valid for easyAI (getValidSpace won't pass back illegal tiles when completed)
 				}
 				Move.makeAReserveMove(spaceTo);
-			} else {
+			} 
+			else {
+				System.out.println("Easy AI could not make a reserve move."+"It had: "+CPU.getReserveCount()+" pieces in the reserve.");
 				spaceFrom = Board.getValidSpace();
+				System.out.println("Board.getValidSpace() returned and we're still running!");
 				while (spaceFrom.getStackOwner() != CPU) {
 					spaceFrom = Board.getValidSpace();
 				}
+				System.out.println("We now have the stack the CPU will move from...");
 				//spaceFrom is a random space owned by the CPU. determine a valid move from here.
 				int validMove = 0;
 				while (validMove == 0) { //Get a Stack the CPUPlayer can actually use, since we don't save per-player references to know this beforehand.
 					spaceTo = Board.getValidSpace();
 					validMove = checkMove(spaceFrom, spaceFrom, CPU, 0);
 				}
+				System.out.println("We're now telling move to do the move we've decided on.");
 				Move.makeAMove(spaceFrom, spaceTo, validMove);
 			}
 		}
