@@ -4,8 +4,8 @@ import java.util.Stack;
 
 public class Player implements Serializable{
 	//MAJOR NOTE: these attributes being private is ALMOST DEFINITELY a problem. AFAIK, private attributes play poorly with subclasses. Not 100% though.
-	private String name; //Not set as default player name slightly changes for each. Static to appease Turn class.
-	private PlayerType type;  //This is an Enumerated Type!
+	private String name; //Not set as default player name slightly changes for each.
+	private PlayerType type;  //These two are Enumerated Types!
 	private DifficultyType difficulty;
 	private Stack<Token> reservedTokens = new Stack<Token>();
 	//private Stack<Token> Tokens = new Stack<Token>();
@@ -64,6 +64,12 @@ public class Player implements Serializable{
 	public void reserveAToken(Token reserve) {
 		this.reservedTokens.push(reserve);
 	}
+	public void resetStats() {
+		this.piecesLost = 0;
+		this.capturedCount = 0;
+		this.domination = 0;
+		this.reservedTokens.clear();
+	}
 	public void setCapturedCount(int capturedCount) {
 		this.capturedCount = capturedCount;
 	}
@@ -87,12 +93,6 @@ public class Player implements Serializable{
 	}
 	public void setType(PlayerType type) {
 		this.type = type;
-	}
-	public void resetStats() {
-		this.piecesLost = 0;
-		this.capturedCount = 0;
-		this.domination = 0;
-		this.reservedTokens.clear();
 	}
 	public void toggleColorblindSetting() 
 	{

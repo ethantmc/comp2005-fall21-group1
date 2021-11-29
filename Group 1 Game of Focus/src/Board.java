@@ -91,7 +91,7 @@ public class Board implements Serializable{
 
 	public static void getTokensLeftForEachPlayer() {
 
-		//TODO Method Stub
+		//Deprecated, this should be handle by Stack, method left in case issues discovered.
 	}
 
 	public static Stack getValidSpace() {
@@ -105,13 +105,13 @@ public class Board implements Serializable{
 		cond3 = ((y == 7) && ((x == 1) || (x == 6)));
 		cond4 = ((y == 0) && ((x == 1) || (x == 6)));
 		x = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
-		
+
 		while(cond1 || cond2 || cond3 || cond4)
 		{
 			System.out.println("inside valid space while loop");
 			//System.out.println(stacks[x][y].getComponent(0));
 			y = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
-			
+
 			cond1 = ((x == 0) && ((y == 0) || (y == 1) || (y == 6) || (y == 7)));
 			cond2 = ((x == 7) && ((y == 0) || (y == 1) || (y == 6) || (y == 7)));
 			cond3 = ((y == 7) && ((x == 1) || (x == 6)));
@@ -124,7 +124,6 @@ public class Board implements Serializable{
 	public static void highlightClicked(Stack clicked) {
 		clicked.updateClickedTokenIcon();
 	}
-	//TODO - IterateOverBoard() code for duplication in the above. After discussion, code duplication deemed preferable to IterateOverBoard() being a real method.
 
 	public static void highlightPossibleMoves(int coordinateX, int coordinateY, int num) {
 

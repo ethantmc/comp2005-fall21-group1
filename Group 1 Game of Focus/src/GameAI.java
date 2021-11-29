@@ -54,7 +54,6 @@ public class GameAI {
 				Move.makeAMove(spaceFrom, spaceTo, validMove);
 			}
 		}
-		//NOTE: NONE OF THE HARD AI CODE IS FUNCTIONAL IN ANY COMMIT WHERE THIS COMMENT APPEARS
 
 		if (CPU.getDifficulty() == DifficultyType.HARD) {
 			if (((CPU.getReserveCount() > 0) && (CPU.getDomination() < 25)) || ((CPU.getDomination() > 90) && (CPU.getReserveCount() > 0))) { //As hard AI, HardAI considers if it's in danger of losing, or able to make a possibly winning move

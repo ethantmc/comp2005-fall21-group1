@@ -43,8 +43,7 @@ public class Token extends JLabel {
 	ImageIcon emptyStackIcon = new ImageIcon(getClass().getResource("/EmptyStack.png"));
 	ImageIcon emptyStackVMIcon = new ImageIcon(getClass().getResource("/EmptyStackValidMove.png"));
 
-	public Token(Player owner) { // TODO: Verify constructor should pass in X and Y
-		// coords.
+	public Token(Player owner) {
 		super();
 		this.owner = owner;
 		this.setHorizontalAlignment(SwingConstants.CENTER);
@@ -108,18 +107,16 @@ public class Token extends JLabel {
 				} else if (owner == null) {
 					this.setIcon(emptyStackIcon);
 				}
-			} else {
-				if (owner == SetupAGame.getPlayers().get(0)) {
-					this.setIcon(p1CBIcon);
-				} else if (owner == SetupAGame.getPlayers().get(1)) {
-					this.setIcon(p2CBIcon);
-				} else if (owner == SetupAGame.getPlayers().get(2)) {
-					this.setIcon(p3CBIcon);
-				} else if (owner == SetupAGame.getPlayers().get(3)) {
-					this.setIcon(p4CBIcon);
-				} else if (owner == null) {
-					this.setIcon(emptyStackIcon);
-				}
+			} else if (owner == SetupAGame.getPlayers().get(0)) {
+				this.setIcon(p1CBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(1)) {
+				this.setIcon(p2CBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(2)) {
+				this.setIcon(p3CBIcon);
+			} else if (owner == SetupAGame.getPlayers().get(3)) {
+				this.setIcon(p4CBIcon);
+			} else if (owner == null) {
+				this.setIcon(emptyStackIcon);
 			}
 		} else if (isStacked) {
 			if (owner == SetupAGame.getPlayers().get(0)) {
@@ -133,18 +130,16 @@ public class Token extends JLabel {
 			} else if (owner == null) {
 				this.setIcon(emptyStackIcon);
 			}
-		} else {
-			if (owner == SetupAGame.getPlayers().get(0)) {
-				this.setIcon(p1Icon);
-			} else if (owner == SetupAGame.getPlayers().get(1)) {
-				this.setIcon(p2Icon);
-			} else if (owner == SetupAGame.getPlayers().get(2)) {
-				this.setIcon(p3Icon);
-			} else if (owner == SetupAGame.getPlayers().get(3)) {
-				this.setIcon(p4Icon);
-			} else if (owner == null) {
-				this.setIcon(emptyStackIcon);
-			}
+		} else if (owner == SetupAGame.getPlayers().get(0)) {
+			this.setIcon(p1Icon);
+		} else if (owner == SetupAGame.getPlayers().get(1)) {
+			this.setIcon(p2Icon);
+		} else if (owner == SetupAGame.getPlayers().get(2)) {
+			this.setIcon(p3Icon);
+		} else if (owner == SetupAGame.getPlayers().get(3)) {
+			this.setIcon(p4Icon);
+		} else if (owner == null) {
+			this.setIcon(emptyStackIcon);
 		}
 
 	}
