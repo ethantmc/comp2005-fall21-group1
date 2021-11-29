@@ -24,7 +24,7 @@ public class SetupAGame {
 	
 	public static void startGame()
 	{
-		Collections.shuffle(players);
+//		Collections.shuffle(players);
 		for (int i = 0; i < 4; i++)
 		{
 			players.get(i).setColor(colors[i]);
@@ -39,6 +39,12 @@ public class SetupAGame {
 //			//players.forEach(i -> i.resetStats());
 //		}
 		window.setVisible(true);
+		
+		if(Turn.getCurrentPlayer().getType() == PlayerType.CPU) 
+		{
+			GameAI.cpuDoMove(Turn.getCurrentPlayer());
+		}
+		
 	}
 
 	public static ArrayList<Player> getPlayers() 
