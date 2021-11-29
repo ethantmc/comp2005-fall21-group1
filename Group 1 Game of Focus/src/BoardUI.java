@@ -129,9 +129,9 @@ public class BoardUI extends JPanel {
 
 				ArrayList<JMenuItem> move = new ArrayList<JMenuItem>();
 				// do not add more menu items if the stack is empty
-				if (!(clicked.getStackOwner() == null) && clicked.getStackOwner()==Turn.getCurrentPlayer()) {
+				if (clicked.getStackOwner()==Turn.getCurrentPlayer()) {
 					for (int i = 0; i < clicked.getStackSize(); i++) {
-						move.add(new JMenuItem(String.valueOf(i + 1)));
+						move.add(new JMenuItem("Move "+String.valueOf(i + 1)));
 						move.get(i).setHorizontalTextPosition(SwingConstants.CENTER);
 						move.get(i).addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -147,7 +147,10 @@ public class BoardUI extends JPanel {
 				// show popupMenu
 				popupMenu.show(e.getComponent(), e.getX(), e.getY());
 
-			} else {
+			} 
+			
+			else 
+			{
 				if (Board.checkMoveValidity(moveFrom, clicked, num))// checks if the clicked stack is a valid stack to
 																	// make the move
 				{
