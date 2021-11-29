@@ -48,7 +48,7 @@ public class GameAI {
 				int validMove = 0;
 				while (validMove == 0) { //Get a Stack the CPUPlayer can actually use, since we don't save per-player references to know this beforehand.
 					spaceTo = Board.getValidSpace();
-					validMove = checkMove(spaceFrom, spaceFrom, CPU, 0);
+					validMove = checkMove(spaceFrom, spaceTo, CPU, 0);
 				}
 				System.out.println("We're now telling move to do the move we've decided on.");
 				Move.makeAMove(spaceFrom, spaceTo, validMove);
