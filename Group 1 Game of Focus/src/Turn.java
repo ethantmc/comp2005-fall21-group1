@@ -36,6 +36,7 @@ public class Turn {
 		else if((currentPlayer.getDomination() == 100) && (checkForReservePieces() == 0)) {
 			//Winner is currentPlayer, call a method to change the current turn text to say currentPlayer is the winner.
 			GameUI.setWinner(currentPlayer);
+			
 		}
 		if(currentPlayer.getType() == PlayerType.CPU) {
 			System.out.println("cpuDoMove reached! CPU Difficulty: "+currentPlayer.getDifficulty());
@@ -54,9 +55,6 @@ public class Turn {
 		playerTurn = ThreadLocalRandom.current().nextInt(0, 4); // Selects from [0,4)
 		currentPlayer = listOfPlayers.get(playerTurn);
 		currentPlayerAsNumber = playerTurn;
-		if(currentPlayer.getType() == PlayerType.CPU) {
-			GameAI.cpuDoMove(currentPlayer);
-		}
 	}
 
 	public static void nextPlayersTurn() {
