@@ -14,6 +14,10 @@ import javax.swing.SwingUtilities;
 
 public class BoardUI extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// private JFrame frame;
 	private ArrayList<Token> testReserves = new ArrayList<Token>();
 	private boolean cond1, cond2, cond3, cond4;
