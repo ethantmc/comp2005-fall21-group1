@@ -134,10 +134,17 @@ public class Stack extends JPanel {
 		return ycoord;
 	}
 	public ArrayList<Token> moveTokens(int numberofTokens) {
-		ArrayList<Token> movingList;
-		movingList = new ArrayList<Token>(stackContents.subList(numberofTokens - 1, (stackContents.size() - 1)));
-		ArrayList<Token> remainingList;
-		remainingList = new ArrayList<Token>(stackContents.subList(0, numberofTokens - 1)); // remainingList will be the
+		ArrayList<Token> movingList = new ArrayList<Token>();
+		ArrayList<Token> remainingList = new ArrayList<Token>();
+		
+		for(int i=0; i<stackContents.size()-numberofTokens;i++)
+		{
+			remainingList.add(stackContents.get(i));
+		}
+		for(int i=stackContents.size()-numberofTokens; i<stackContents.size();i++)
+		{
+			movingList.add(stackContents.get(i));
+		}
 		// new
 		// stack in the old place.
 		// Size-1 since indexed at
