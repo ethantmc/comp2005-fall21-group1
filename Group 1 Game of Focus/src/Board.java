@@ -106,10 +106,9 @@ public class Board implements Serializable{
 		cond4 = ((y == 0) && ((x == 1) || (x == 6)));
 		x = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
 		
-		//System.out.println(stacks[x][y].getComponent(0));
 		while(cond1 || cond2 || cond3 || cond4)
 		{
-			System.out.println("valid space");
+			System.out.println("inside valid space while loop");
 			//System.out.println(stacks[x][y].getComponent(0));
 			y = ThreadLocalRandom.current().nextInt(0, 8); //[0,7]
 			
