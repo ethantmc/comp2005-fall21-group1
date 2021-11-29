@@ -164,6 +164,8 @@ public class BoardUI extends JPanel {
 					moveFrom = null;
 					moveTo = null;
 				}
+				else
+					Board.highlightPossibleMoves(moveFrom.getXcoord(), moveFrom.getYcoord(), num);
 			}
 
 		}
