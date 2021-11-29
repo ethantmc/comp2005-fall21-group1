@@ -48,7 +48,7 @@ public class GameUI extends JFrame {
 
 		boardUI = new BoardUI();
 		contentPane.add(boardUI, BorderLayout.CENTER);
-
+		
 		JPanel eastPanel = new JPanel();
 		eastPanel.setBackground(Color.WHITE);
 		contentPane.add(eastPanel, BorderLayout.EAST);
@@ -194,9 +194,7 @@ public class GameUI extends JFrame {
 		eastPanel.add(paddingPanel.get(2));
 		westPanel.add(paddingPanel.get(3));
 		
-		if(Turn.getCurrentPlayer().getType() == PlayerType.CPU) {
-			GameAI.cpuDoMove(Turn.getCurrentPlayer());
-		}
+
 	}
 
 	public void updateStats() {
