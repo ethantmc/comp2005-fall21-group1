@@ -56,7 +56,7 @@ public class GameAI {
 		}
 
 		if (CPU.getDifficulty() == DifficultyType.HARD) {
-			if (((CPU.getReserveCount() > 0) && (CPU.getDomination() < 25)) || ((CPU.getDomination() > 90) && (CPU.getReserveCount() > 0))) { //As hard AI, HardAI considers if it's in danger of losing, or able to make a possibly winning move
+			if (((CPU.getReserveCount() > 0) && (CPU.getDomination() < 25)) || ((CPU.getDomination() > 80) && (CPU.getReserveCount() > 0))) { //As hard AI, HardAI considers if it's in danger of losing, or able to make a possibly winning move
 				int validMove = 0; //NOT redundant by getValidSpace(), a move may be pointless.
 				Stack bestSpaceFrom;
 				Stack bestSpaceTo;
@@ -80,7 +80,7 @@ public class GameAI {
 				}
 				int i;
 				boolean jobDone = false;
-				for(i=0; i<5; i++) { //arbitrary number of non-exhaustive attempts, to prevent a neverending stall.
+				for(i=0; i<14; i++) { //arbitrary number of non-exhaustive attempts, to prevent a neverending stall.
 					System.out.println(i+"th attempt to make a smarter move!");
 					spaceTo = Board.getValidSpace();
 					int validMove = 0;
