@@ -19,12 +19,7 @@ public class Player implements Serializable{
 		super();
 		this.name = name;
 		this.type = type;
-		if(this.type == PlayerType.HUMAN) {
-			this.difficulty = DifficultyType.HUMAN;
-		}
-		else {
-			this.difficulty = difficulty;
-		}
+		this.difficulty = difficulty;
 		this.isColorblindEnabled = colorblindSetting;
 		reservedTokens.clear();
 	}
