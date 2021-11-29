@@ -36,6 +36,7 @@ public class Turn {
 		else if((currentPlayer.getDomination() == 100) && (checkForReservePieces() == 0)) {
 			//Winner is currentPlayer, call a method to change the current turn text to say currentPlayer is the winner.
 			GameUI.setWinner(currentPlayer);
+			SwingUtilities.updateComponentTreeUI(SetupAGame.getGameUIInstance());
 			
 		}
 		if(currentPlayer.getType() == PlayerType.CPU) {
