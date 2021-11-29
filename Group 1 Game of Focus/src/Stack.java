@@ -152,6 +152,7 @@ public class Stack extends JPanel {
 		// TODO: Test for a null
 		// list,
 		// might need special logic.
+		
 		stackContents = remainingList; // This stack is reduced to whatever wasn't moved.
 		updateStackDisplay();
 		return movingList;
