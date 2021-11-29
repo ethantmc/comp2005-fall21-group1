@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class Move {
@@ -6,10 +7,7 @@ public class Move {
 	public static void makeAMove(Stack moveFrom, Stack moveTo, int num)
 	{
 		//TODO Method stub
-		//moveFrom.moveTokens(num).forEach(i -> moveTo.stackToken(i)); //this code doesn't work, moveTokens returns a list...
-		ArrayList<Token> movingTokens = new ArrayList<Token>();
-		movingTokens = moveFrom.moveTokens(num);
-		movingTokens.forEach(i -> moveTo.stackToken(i));
+		moveFrom.moveTokens(num).forEach(i -> moveTo.stackToken(i)); 
 		Turn.nextPlayersTurn();
 		SetupAGame.getGameUIInstance().updateStats();
 	}
