@@ -17,7 +17,7 @@ public class InfoScreenUI extends JFrame {
 	ImageIcon infoImage = new ImageIcon(getClass().getResource("/InfoUI.png"));
 
 	public InfoScreenUI() {
-		setBounds(100, 100, 603, 622);
+		setBounds(100, 100, 635, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
