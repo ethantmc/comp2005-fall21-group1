@@ -79,26 +79,6 @@ public class BoardUI extends JPanel {
 
 			}
 		}
-		if (GameState.isNewGame())
-		{
-			// Adding reserve tokens for test purpose
-			int k = 0;
-			for (int p = 0; p < 4; p++) {
-				for (int q = 0; q < 8; q++) {
-					testReserves.add(new Token(SetupAGame.getPlayers().get(p)));
-					SetupAGame.getPlayers().get(p).reserveAToken(testReserves.get(k));
-					k++;
-				}
-
-			}
-			// removing stack tokens for test purpose
-			stacks[4][5].removeToken();
-			stacks[4][2].removeToken();
-			stacks[4][3].removeToken();
-			stacks[2][5].removeToken();
-			stacks[2][3].removeToken();
-			Board.updateStacksDisplay();
-		}
 
 	}
 
